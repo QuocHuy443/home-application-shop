@@ -1,0 +1,37 @@
+Để chạy và trải nghiệm trực tiếp chương trình Home Appliance Shop ngay trên máy tính của bạn thông qua Laragon, bạn hãy làm theo các bước đơn giản sau:
+
+Bước 1: Khởi động hệ thống (Laragon)
+Mở phần mềm Laragon trên máy tính của bạn.
+Bấm nút Start All để khởi động Apache (máy chủ web) và MySQL (cơ sở dữ liệu). (Hãy đảm bảo cả hai đều hiển thị thông báo đã chạy).
+Bước 2: Nạp dữ liệu mẫu (Tôi đã chạy giúp bạn rồi)
+Cơ sở dữ liệu và 11 bảng cùng với các dữ liệu mẫu (sản phẩm đồ gia dụng, đơn hàng, tài khoản) đã được tôi khởi tạo xong xuôi. Bạn không cần làm gì thêm ở bước này.
+
+Nếu sau này bạn muốn xóa sạch dữ liệu và tạo lại từ đầu, bạn có thể mở Terminal/Command Prompt trong thư mục dự án và gõ:
+
+bash
+php database/migrate.php
+php database/seeder.php
+Bước 3: Mở trình duyệt và Trải nghiệm
+Do bạn đang dùng Laragon, hệ thống sẽ tự động tạo tên miền ảo dựa theo tên thư mục của dự án (home-application-shop). Bạn hãy mở trình duyệt web (Chrome, Edge...) và truy cập vào đường dẫn sau:
+
+👉 URL truy cập: http://home-application-shop.test/
+
+Bước 4: Kiểm thử với các Tài khoản mẫu
+Giao diện trang chủ và các sản phẩm sẽ hiện ra. Bạn có thể thử thêm sản phẩm vào giỏ hàng hoặc đăng nhập bằng các tài khoản đã được tạo sẵn trong hệ thống:
+
+1. Tài khoản Khách hàng (Dùng để mua sắm, Checkout):
+
+Email: thienlam@gmail.com
+Mật khẩu: 123456
+2. Tài khoản Quản trị viên (Admin - Dùng để quản lý sản phẩm, đơn hàng):
+
+Email: admin@gmail.com
+Mật khẩu: 123456 (Sau khi đăng nhập tài khoản Admin, bạn sẽ thấy nút "Admin" ở thanh menu trên cùng để truy cập vào Bảng điều khiển Dashboard).
+Một vài lưu ý:
+
+Bất cứ khi nào hệ thống có lỗi ngầm, file log sẽ được ghi lại tại thư mục: 
+
+storage/logs
+.
+Dự án đã được nâng cấp lên chuẩn MVC thật, không còn giống với các file chạy thô tĩnh lúc đầu nên các file test_auth.php cũ đã không còn phù hợp để test qua màn hình console nữa. Mọi thao tác hãy test trực tiếp trên giao diện web bạn nhé.
+Bạn hãy mở web lên xem giao diện, nếu cần tinh chỉnh màu sắc, lỗi hiển thị ở đâu hay thêm chức năng gì, bạn cứ nhắn lại tôi nhé!

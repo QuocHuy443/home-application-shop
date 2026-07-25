@@ -1,0 +1,11 @@
+/* Admin CSS */
+body {
+    background-color: #f4f6f9;
+}
+.sidebar {
+    min-height: 100vh;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+.content-wrapper {
+    padding: 20px;
+}

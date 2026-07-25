@@ -1,0 +1,18 @@
+# Thư mục chứa các thư viện tải về bằng Composer (Bắt buộc phải bỏ qua)
+/vendor/
+
+# File cấu hình môi trường chứa thông tin bảo mật DB (Tuyệt đối không đẩy lên GitHub)
+.env
+.env.local
+
+# Thư mục lưu cache hoặc logs sinh ra khi chạy web
+/storage/logs/
+/storage/framework/cache/
+
+# File rác của các trình soạn thảo code (VS Code, PHPStorm)
+.vscode/
+.idea/
+
+# File rác của hệ điều hành
+.DS_Store
+Thumbs.db

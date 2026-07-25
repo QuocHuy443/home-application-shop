@@ -1,0 +1,17 @@
+{
+    "name": "app/home-appliance-shop",
+    "description": "Website Bán Đồ Gia Dụng PHP MVC",
+    "type": "project",
+    "require": {
+        "illuminate/database": "^13.21",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
