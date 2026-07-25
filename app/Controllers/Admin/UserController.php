@@ -25,6 +25,7 @@ class UserController extends Controller
         $user = User::find($userId);
         if (!$user) {
             $this->redirect('/admin/users');
+            return;
         }
 
         $role = Role::where('name', $roleName)->first();
@@ -38,31 +39,35 @@ class UserController extends Controller
     public function toggleStatus()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return $this->json(['success' => false, 'message' => 'Method not allowed'], 405);
+            $this->redirect('/admin/users');
+            return;
         }
 
-        $rawInput = file_get_contents('php://input');
-        $data = json_decode($rawInput, true) ?: [];
+        $userId = $_POST['id'] ?? $_POST['user_id'] ?? null;
+        $status = $_POST['status'] ?? null;
 
-        $userId = $data['id'] ?? $_POST['id'] ?? null;
-        $status = $data['status'] ?? $_POST['status'] ?? 1;
+        if ($userId) {
+            $user = User::find($userId);
 
-        $user = User::find($userId);
-        if (!$user) {
-            return $this->json(['success' => false, 'message' => 'User không tồn tại'], 404);
+            if ($user) {
+                // Kiểm tra không cho Admin tự khóa tài khoản của chính mình
+                $currentUser = SessionHelper::user();
+                $currentUserId = $currentUser ? (is_array($currentUser) ? ($currentUser['id'] ?? null) : ($currentUser->id ?? null)) : null;
+
+                // Nếu status truyền vào rỗng thì tự đảo ngược trạng thái cũ
+                $newStatus = ($status !== null) ? (int)$status : (((int)$user->status === 1) ? 0 : 1);
+
+                if ($currentUserId && (int)$currentUserId === (int)$userId && $newStatus === 0) {
+                    $this->redirect('/admin/users');
+                    return;
+                }
+
+                // Cập nhật trạng thái mới
+                $user->update(['status' => $newStatus]);
+            }
         }
 
-        $currentUser = SessionHelper::user();
-
-        if ($currentUser && (int)$currentUser['id'] === (int)$userId && (int)$status === 0) {
-            return $this->json([
-                'success' => false, 
-                'message' => 'Bạn không thể tự khóa tài khoản Admin của chính mình!'
-            ], 400);
-        }
-
-        $user->update(['status' => (int)$status]);
-
-        return $this->json(['success' => true, 'message' => 'Cập nhật trạng thái thành công!']);
+        // Chuyển hướng quay lại trang quản lý người dùng
+        $this->redirect('/admin/users');
     }
 }

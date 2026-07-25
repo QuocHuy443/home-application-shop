@@ -73,7 +73,8 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 <tbody>
                     <?php if (!empty($users) && count($users) > 0): foreach ($users as $u): 
                         $roleName = $u->role->name ?? 'customer';
-                        $isSelf = ($currentUser && (int)$u->id === (int)$currentUser['id']);
+                        $currentUserId = $currentUser ? (is_array($currentUser) ? ($currentUser['id'] ?? null) : ($currentUser->id ?? null)) : null;
+                        $isSelf = ($currentUserId && (int)$u->id === (int)$currentUserId);
                     ?>
                             <tr>
                                 <td><span class="badge bg-light text-dark border">#<?= $u->id ?></span></td>
@@ -188,6 +189,13 @@ require_once __DIR__ . '/../../layouts/admin.php';
     </div>
 </div>
 
+<!-- FORM ẨN ĐỂ SUBMIT KHÓA / MỞ KHÓA TÀI KHOẢN -->
+<form id="toggleStatusForm" action="/admin/users/toggle-status" method="POST" style="display: none;">
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <input type="hidden" name="id" id="toggleUserId">
+    <input type="hidden" name="status" id="toggleUserStatus">
+</form>
+
 <script>
     function openRoleModal(user) {
         document.getElementById('modalUserId').value = user.id;
@@ -204,34 +212,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
         const actionText = isChecked ? 'mở khóa' : 'khóa';
 
         if (confirm(`Bạn có chắc chắn muốn ${actionText} tài khoản này không?`)) {
-            fetch('/admin/users/toggle-status', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: userId,
-                        status: status
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Có lỗi xảy ra: ' + data.message);
-                        if (event && event.target) {
-                            event.target.checked = !isChecked;
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Lỗi kết nối máy chủ!');
-                    if (event && event.target) {
-                        event.target.checked = !isChecked;
-                    }
-                });
+            document.getElementById('toggleUserId').value = userId;
+            document.getElementById('toggleUserStatus').value = status;
+            document.getElementById('toggleStatusForm').submit();
         } else {
             if (event && event.target) {
                 event.target.checked = !isChecked;
