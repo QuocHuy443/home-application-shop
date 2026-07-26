@@ -118,8 +118,13 @@ class CheckoutController extends Controller
             // E. Xóa giỏ hàng
             $this->cartController->clear();
 
-            // Chuyển hướng thành công (nên có trang success, tạm redirect home)
-            $this->redirect('/?checkout=success');
+            // Chuyển hướng theo phương thức thanh toán
+            $paymentMethod = $data['payment_method'] ?? 'cod';
+            if ($paymentMethod === 'bank_transfer') {
+                $this->redirect('/checkout/qr/' . $order->id);
+            } else {
+                $this->redirect('/checkout/success/' . $order->id);
+            }
 
         } catch (\Exception $e) {
             // Nếu có bất kỳ lỗi nào xảy ra -> Rollback lại toàn bộ
@@ -127,5 +132,103 @@ class CheckoutController extends Controller
             \App\Helpers\Logger::error("Checkout error: " . $e->getMessage());
             $this->back();
         }
+    }
+
+    // Hiển thị trang Quét Mã QR Ngân Hàng
+    public function showQr($id)
+    {
+        $order = Order::with(['items.product', 'payment'])->find($id);
+
+        if (!$order) {
+            $this->redirect('/cart');
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        if ($order->user_id != $userId) {
+            $this->redirect('/');
+        }
+
+        // Nếu đơn hàng đã được thanh toán -> sang thẳng trang success
+        if ($order->payment && $order->payment->payment_status === 'paid') {
+            $this->redirect('/checkout/success/' . $order->id);
+        }
+
+        // Thông tin cấu hình Ngân hàng (MB Bank)
+        $bankConfig = [
+            'bank_code'    => 'MB',
+            'bank_name'    => 'Ngân hàng TMCP Quân Đội (MBBank)',
+            'account_no'   => '803022005',
+            'account_name' => 'HOME APPLIANCE SHOP',
+            'template'     => 'compact2'
+        ];
+
+        $orderCode = $order->order_code;
+        $amount = (int) $order->total_amount;
+        $qrUrl = "https://img.vietqr.io/image/{$bankConfig['bank_code']}-{$bankConfig['account_no']}-{$bankConfig['template']}.png?amount={$amount}&addInfo=" . urlencode($orderCode) . "&accountName=" . urlencode($bankConfig['account_name']);
+
+        $this->view('client/qr_payment', [
+            'order'      => $order,
+            'qrUrl'      => $qrUrl,
+            'bankConfig' => $bankConfig
+        ], 'main');
+    }
+
+    // Xử lý Giả lập/Xác nhận thanh toán thành công qua QR
+    public function confirmQrPayment($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+        CsrfHelper::validate();
+
+        $order = Order::with('payment')->find($id);
+        if (!$order) {
+            if ($this->isAjax()) {
+                $this->json(['success' => false, 'message' => 'Đơn hàng không tồn tại'], 404);
+            }
+            $this->redirect('/cart');
+        }
+
+        // Cập nhật trạng thái đơn hàng thành Đang xử lý & Đã thanh toán
+        $order->update(['status' => 'processing']);
+        if ($order->payment) {
+            $order->payment->update([
+                'payment_status' => 'paid',
+                'payment_method' => 'bank_transfer',
+                'transaction_id' => 'TRANS_QR_' . time() . rand(100, 999)
+            ]);
+        }
+
+        if ($this->isAjax()) {
+            $this->json([
+                'success'  => true,
+                'message'  => 'Xác nhận thanh toán thành công!',
+                'redirect' => '/checkout/success/' . $order->id
+            ]);
+        }
+
+        $this->redirect('/checkout/success/' . $order->id);
+    }
+
+    // Trang Đặt hàng & Thanh toán Thành công
+    public function success($id)
+    {
+        $order = Order::with(['items.product', 'payment'])->find($id);
+
+        if (!$order) {
+            $this->redirect('/');
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        if ($order->user_id != $userId) {
+            $this->redirect('/');
+        }
+
+        $this->view('client/checkout_success', [
+            'order' => $order
+        ], 'main');
+    }
+
+    private function isAjax()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 }

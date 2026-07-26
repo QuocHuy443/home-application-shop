@@ -44,6 +44,9 @@ $router->post('/cart/clear', [CartController::class, 'clear']);
 */
 $router->get('/checkout', [CheckoutController::class, 'index'], ['auth']);
 $router->post('/checkout/process', [CheckoutController::class, 'processCheckout'], ['auth']);
+$router->get('/checkout/qr/{id}', [CheckoutController::class, 'showQr'], ['auth']);
+$router->post('/checkout/confirm-qr/{id}', [CheckoutController::class, 'confirmQrPayment'], ['auth']);
+$router->get('/checkout/success/{id}', [CheckoutController::class, 'success'], ['auth']);
 
 /*
 |--------------------------------------------------------------------------
