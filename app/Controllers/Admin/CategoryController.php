@@ -9,10 +9,35 @@ class CategoryController extends Controller
 {
     // 1. Lấy danh sách toàn bộ danh mục
     public function index()
-    {
-        $categories = Category::withCount('products')->orderBy('id', 'DESC')->get();
-        $this->view('admin/categories/index', ['categories' => $categories], 'admin');
+{
+    $query = Category::withCount('products');
+
+    // Tìm kiếm theo tên hoặc slug
+    if (!empty($_GET['search'])) {
+
+        $search = trim($_GET['search']);
+
+        $query->where(function ($q) use ($search) {
+
+            $q->where('name', 'LIKE', '%' . $search . '%')
+              ->orWhere('slug', 'LIKE', '%' . $search . '%');
+
+        });
     }
+
+    // Sắp xếp mới nhất
+    $categories = $query
+        ->orderBy('id', 'DESC')
+        ->get();
+
+    $this->view(
+        'admin/categories/index',
+        [
+            'categories' => $categories
+        ],
+        'admin'
+    );
+}
 
     // 2. Thêm danh mục mới
     public function store()

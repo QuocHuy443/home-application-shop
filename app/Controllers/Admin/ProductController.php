@@ -11,12 +11,62 @@ use App\Helpers\FileUploader;
 class ProductController extends Controller
 {
     // 1. Lấy danh sách sản phẩm (có kèm Danh mục)
-    public function index()
-    {
-        $products = Product::with(['category', 'images'])->orderBy('id', 'DESC')->get();
-        $categories = Category::all();
-        $this->view('admin/products/index', ['products' => $products, 'categories' => $categories], 'admin');
+   public function index()
+{
+    $query = Product::with(['category', 'images']);
+
+    // Tìm kiếm theo tên hoặc slug
+    if (!empty($_GET['search'])) {
+        $search = trim($_GET['search']);
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%' . $search . '%')
+              ->orWhere('slug', 'LIKE', '%' . $search . '%');
+        });
     }
+
+    // Lọc theo danh mục
+    if (!empty($_GET['category_id'])) {
+        $query->where('category_id', $_GET['category_id']);
+    }
+
+    // Lọc theo trạng thái tồn kho
+    if (!empty($_GET['stock_status'])) {
+
+        switch ($_GET['stock_status']) {
+
+            case 'in_stock':
+                // Còn hàng
+                $query->where('stock', '>', 5);
+                break;
+
+            case 'low_stock':
+                // Sắp hết hàng (1 - 5)
+                $query->whereBetween('stock', [1, 5]);
+                break;
+
+            case 'out_of_stock':
+                // Hết hàng
+                $query->where('stock', '=', 0);
+                break;
+        }
+    }
+
+    $products = $query
+        ->orderBy('id', 'DESC')
+        ->get();
+
+    $categories = Category::orderBy('name')->get();
+
+    $this->view(
+        'admin/products/index',
+        [
+            'products' => $products,
+            'categories' => $categories
+        ],
+        'admin'
+    );
+}
 
     // 2. Thêm sản phẩm mới
     public function store()
