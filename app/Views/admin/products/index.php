@@ -146,7 +146,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow rounded-4">
             <form action="/admin/products/save" method="POST" enctype="multipart/form-data" id="productForm">
-                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                
                 <div class="modal-header border-bottom-0 pb-0">
                     <h5 class="modal-title fw-bold" id="productModalLabel"><i
                             class="fa-solid fa-box text-primary me-2"></i>Thêm Sản Phẩm Mới</h5>

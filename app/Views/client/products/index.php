@@ -106,6 +106,8 @@
                                             class="text-danger fw-bold fs-5 d-block mb-2"><?= number_format($product->price) ?>đ</span>
                                         <form action="/cart/add" method="POST">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+    
                                             <input type="hidden" name="product_id" value="<?= $product->id ?>">
                                             <input type="hidden" name="quantity" value="1">
                                             <button type="submit"

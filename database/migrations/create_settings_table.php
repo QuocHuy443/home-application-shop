@@ -18,3 +18,4 @@ if (!Capsule::schema()->hasTable('settings')) {
         ['key_name' => 'announcement', 'key_value' => 'Chào mừng bạn đến với HomeApp Shop!']
     ]);
 }
+echo "[✓] Tạo bảng 'settings' thành công!\n";

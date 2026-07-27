@@ -132,7 +132,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
             </div>
 
             <form action="/admin/orders/update-status" method="POST">
-                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                
                 <div class="modal-body p-4 pt-0">
                     <input type="hidden" name="order_id" id="modalInputOrderId">
 

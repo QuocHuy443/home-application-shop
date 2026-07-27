@@ -7,3 +7,4 @@ if (!Capsule::schema()->hasColumn('users', 'status')) {
         $table->tinyInteger('status')->default(1)->after('role_id');
     });
 }
+echo "[✓] Thêm cột 'status' vào bảng 'users' thành công!\n";

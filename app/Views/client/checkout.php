@@ -22,6 +22,8 @@
     <?php if (!empty($cartItems)): ?>
     <form action="/checkout/process" method="POST" id="checkoutForm">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+    
         <div class="row g-4">
             <!-- CỘT BÊN TRÁI: THÔNG TIN GIAO HÀNG & PHƯƠNG THỨC THANH TOÁN -->
             <div class="col-lg-7">

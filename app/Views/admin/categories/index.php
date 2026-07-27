@@ -102,7 +102,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 </h5>
 
                 <form action="/admin/categories/save" method="POST" id="categoryForm">
-                    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                    
                     <input type="hidden" name="id" id="catId">
 
                     <!-- Tên danh mục -->

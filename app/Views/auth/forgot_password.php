@@ -35,6 +35,8 @@
 
                 <form action="/forgot-password" method="POST">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+    
                     <div class="mb-4">
                         <label class="form-label fw-semibold small">Địa chỉ Email đã đăng ký</label>
                         <div class="input-group">

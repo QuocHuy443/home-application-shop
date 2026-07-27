@@ -27,6 +27,8 @@ require_once __DIR__ . '/../../layouts/admin.php';
     <?php endif; ?>
 
     <form action="/admin/settings/update" method="POST" enctype="multipart/form-data" class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
         <?= CsrfHelper::csrfField() ?>
 
         <h5 class="fw-bold text-primary mb-3"><i class="fa-solid fa-globe me-2"></i> 1. Thông Tin Chung Website</h5>

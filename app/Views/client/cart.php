@@ -42,7 +42,9 @@
                                         <td><?= number_format($item['price']) ?>đ</td>
                                         <td>
                                             <form action="/cart/update" method="POST" class="d-flex align-items-center">
-                                                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                                                
                                                 <input type="hidden" name="product_id" value="<?= $item['product_id'] ?>">
                                                 <input type="number" name="quantity"
                                                     class="form-control form-control-sm text-center rounded-3"
@@ -53,7 +55,9 @@
                                             <?= number_format($item['price'] * $item['quantity']) ?>đ</td>
                                         <td class="text-end">
                                             <form action="/cart/remove" method="POST" class="d-inline">
-                                                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                                                
                                                 <input type="hidden" name="product_id" value="<?= $item['product_id'] ?>">
                                                 <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle"
                                                     onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">

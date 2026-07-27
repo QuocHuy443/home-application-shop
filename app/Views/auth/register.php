@@ -25,7 +25,9 @@
                 <?php endif; ?>
 
                 <form action="/register" method="POST">
-                    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                    
                     <!-- Họ và tên -->
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Họ và tên <span class="text-danger">*</span></label>

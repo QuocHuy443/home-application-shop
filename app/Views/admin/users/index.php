@@ -152,7 +152,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow rounded-4">
             <form action="/admin/users/update-role" method="POST">
-                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+                
                 
                 <div class="modal-header border-bottom-0 pb-0">
                     <h5 class="modal-title fw-bold" id="roleModalLabel"><i class="fa-solid fa-user-gear text-primary me-2"></i>Phân Quyền Tài Khoản</h5>
@@ -192,6 +194,8 @@ require_once __DIR__ . '/../../layouts/admin.php';
 <!-- FORM ẨN ĐỂ SUBMIT KHÓA / MỞ KHÓA TÀI KHOẢN -->
 <form id="toggleStatusForm" action="/admin/users/toggle-status" method="POST" style="display: none;">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+    
     <input type="hidden" name="id" id="toggleUserId">
     <input type="hidden" name="status" id="toggleUserStatus">
 </form>

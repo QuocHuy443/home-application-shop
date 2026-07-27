@@ -48,6 +48,8 @@
                 <!-- Form thêm vào giỏ hàng -->
                 <form action="/cart/add" method="POST" class="mb-4">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+    
+    
                     <input type="hidden" name="product_id" value="<?= $product->id ?>">
                     <div class="row g-3 align-items-center mb-4">
                         <div class="col-auto">
