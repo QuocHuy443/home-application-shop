@@ -72,3 +72,56 @@
         </div>
     </div>
 </footer>
+
+<script>
+// Phòng chống việc nhúng Script bị trùng lặp nhiều lần trên cùng 1 trang
+if (!window.cartAddListenerAttached) {
+    window.cartAddListenerAttached = true;
+
+    document.addEventListener('submit', function (e) {
+        // Bắt tất cả form có action chứa /cart/add
+        if (e.target && e.target.action && e.target.action.includes('/cart/add')) {
+            e.preventDefault(); // CHẶN CHUYỂN TRANG BẮT BUỘC
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Khóa nút tạm thời để tránh bấm liên tục
+            if (submitBtn) submitBtn.disabled = true;
+
+            const formData = new FormData(form);
+            formData.append('ajax', '1');
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 1. Cập nhật Badge giỏ hàng trên Header ngay lập tức
+                    const badge = document.querySelector('.navbar .badge');
+                    if (badge) {
+                        badge.innerText = data.cartCount;
+                    }
+                    
+                    // 2. Thông báo cho người dùng
+                    alert(data.message || 'Thêm vào giỏ hàng thành công!');
+                } else {
+                    alert(data.message || 'Không thể thêm vào giỏ hàng!');
+                }
+            })
+            .catch(err => {
+                console.error('Fetch Error:', err);
+                alert('Có lỗi xảy ra, vui lòng thử lại!');
+            })
+            .finally(() => {
+                if (submitBtn) submitBtn.disabled = false;
+            });
+        }
+    });
+}
+</script>

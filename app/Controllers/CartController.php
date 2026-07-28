@@ -17,6 +17,32 @@ class CartController extends Controller
         }
     }
 
+    // Hàm phụ hỗ trợ phản hồi AJAX JSON hoặc Redirect
+    private function respond($success, $message, $redirectUrl = '/cart')
+    {
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        if ($isAjax || isset($_POST['ajax'])) {
+            header('Content-Type: application/json');
+            
+            // Tính lại tổng số lượng item trong giỏ để cập nhật Badge Header
+            $cartCount = 0;
+            if (isset($_SESSION['cart']['items'])) {
+                foreach ($_SESSION['cart']['items'] as $item) {
+                    $cartCount += (int)($item['quantity'] ?? 1);
+                }
+            }
+
+            echo json_encode([
+                'success'   => $success,
+                'message'   => $message,
+                'cartCount' => $cartCount
+            ]);
+            exit;
+        }
+
+        $this->redirect($redirectUrl);
+    }
+
     // 1. Lấy danh sách sản phẩm trong giỏ kèm tính tổng tiền
     public function index()
     {
@@ -46,7 +72,7 @@ class CartController extends Controller
 
         if (!SessionHelper::isLoggedIn()) {
             $_SESSION['auth_error'] = 'Vui lòng đăng nhập để sử dụng giỏ hàng.';
-            $this->redirect('/login');
+            return $this->respond(false, 'Vui lòng đăng nhập để sử dụng giỏ hàng.', '/login');
         }
 
         $productId = $_POST['product_id'] ?? null;
@@ -55,19 +81,19 @@ class CartController extends Controller
         $product = Product::find($productId);
 
         if (!$product) {
-            $this->back();
+            return $this->respond(false, 'Sản phẩm không tồn tại.');
         }
 
         // Kiểm tra tồn kho
         if ($product->stock < $quantity) {
-            $this->back();
+            return $this->respond(false, 'Số lượng tồn kho không đủ.');
         }
 
         // Nếu sản phẩm đã có trong giỏ -> Tăng số lượng
         if (isset($_SESSION['cart']['items'][$productId])) {
             $newQuantity = $_SESSION['cart']['items'][$productId]['quantity'] + $quantity;
             if ($newQuantity > $product->stock) {
-                $this->back();
+                return $this->respond(false, 'Số lượng vượt quá tồn kho hiện có.');
             }
             $_SESSION['cart']['items'][$productId]['quantity'] = $newQuantity;
         } else {
@@ -81,7 +107,7 @@ class CartController extends Controller
             ];
         }
 
-        $this->redirect('/cart');
+        return $this->respond(true, 'Thêm vào giỏ hàng thành công!');
     }
 
     // 3. Cập nhật số lượng sản phẩm trong giỏ
@@ -91,7 +117,7 @@ class CartController extends Controller
 
         if (!SessionHelper::isLoggedIn()) {
             $_SESSION['auth_error'] = 'Vui lòng đăng nhập để chỉnh sửa giỏ hàng.';
-            $this->redirect('/login');
+            return $this->respond(false, 'Vui lòng đăng nhập để chỉnh sửa giỏ hàng.', '/login');
         }
 
         $productId = $_POST['product_id'] ?? null;
@@ -104,12 +130,12 @@ class CartController extends Controller
         if (isset($_SESSION['cart']['items'][$productId])) {
             $product = Product::find($productId);
             if ($product && $quantity > $product->stock) {
-                $this->back();
+                return $this->respond(false, 'Số lượng vượt quá tồn kho hiện có.');
             }
             $_SESSION['cart']['items'][$productId]['quantity'] = $quantity;
         }
 
-        $this->redirect('/cart');
+        return $this->respond(true, 'Đã cập nhật số lượng giỏ hàng.');
     }
 
     // 4. Xóa 1 sản phẩm khỏi giỏ
@@ -119,7 +145,7 @@ class CartController extends Controller
 
         if (!SessionHelper::isLoggedIn()) {
             $_SESSION['auth_error'] = 'Vui lòng đăng nhập để xóa sản phẩm khỏi giỏ hàng.';
-            $this->redirect('/login');
+            return $this->respond(false, 'Vui lòng đăng nhập.', '/login');
         }
 
         $productId = $_POST['product_id'] ?? null;
@@ -131,7 +157,7 @@ class CartController extends Controller
         if (isset($_SESSION['cart']['items'][$productId])) {
             unset($_SESSION['cart']['items'][$productId]);
         }
-        $this->redirect('/cart');
+        return $this->respond(true, 'Đã xóa sản phẩm khỏi giỏ hàng.');
     }
 
     // 5. Làm sạch giỏ hàng (sau khi thanh toán thành công)
