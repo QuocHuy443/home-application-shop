@@ -50,6 +50,13 @@
         <div class="text-uppercase small fw-bold text-secondary mb-2 px-2">Cài đặt & Tài khoản</div>
         <ul class="nav nav-pills flex-column gap-1">
             <li class="nav-item">
+                <a href="/admin/profile"
+                    class="nav-link text-white-50 d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= (str_contains($_SERVER['REQUEST_URI'], '/admin/profile')) ? 'active bg-primary text-white' : '' ?>">
+                    <i class="fa-solid fa-id-card" style="width: 20px;"></i>
+                    <span>Hồ sơ cá nhân</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/admin/users"
                     class="nav-link text-white-50 d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= (str_contains($_SERVER['REQUEST_URI'], '/admin/users')) ? 'active bg-primary text-white' : '' ?>">
                     <i class="fa-solid fa-users" style="width: 20px;"></i>

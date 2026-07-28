@@ -11,7 +11,7 @@ use App\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Controllers\Admin\OrderController as AdminOrderController;
 use App\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Controllers\Admin\UserController as AdminUserController;
-use App\Controllers\Admin\SettingController as AdminSettingController; // 1. Khai báo thêm SettingController
+use App\Controllers\Admin\SettingController as AdminSettingController;
 
 /** @var \App\Core\Router $router */
 
@@ -66,6 +66,10 @@ $router->get('/logout', [AuthController::class, 'logout']);
 */
 $router->group('/admin', ['admin'], function ($router) {
     $router->get('/dashboard', [AdminDashboardController::class, 'index']);
+
+    // Admin Profile (Hồ sơ cá nhân Admin)
+    $router->get('/profile', [AdminDashboardController::class, 'profile']);
+    $router->post('/profile/update', [AdminDashboardController::class, 'updateProfile']);
 
     // Products
     $router->get('/products', [AdminProductController::class, 'index']);
