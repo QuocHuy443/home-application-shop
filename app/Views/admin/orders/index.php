@@ -29,7 +29,7 @@ require_once __DIR__ . '/../../layouts/admin.php';
                             class="fa-solid fa-magnifying-glass text-muted"></i></span>
                     <input type="text" name="search" class="form-control border-start-0"
                         placeholder="Tìm tên, SĐT khách hàng hoặc Mã ĐH..."
-                        value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                        value="<?= htmlspecialchars((string)($_GET['search'] ?? '')) ?>">
                 </div>
             </div>
             <div class="col-md-4">
@@ -73,30 +73,35 @@ require_once __DIR__ . '/../../layouts/admin.php';
                     <tr>
                         <td><span class="badge bg-light text-dark border fw-bold">#<?= $o->id ?></span></td>
                         <td>
-                            <div class="fw-bold text-dark"><?= htmlspecialchars($o->fullname) ?></div>
-                            <small class="text-muted"><i
-                                    class="fa-solid fa-phone me-1"></i><?= htmlspecialchars($o->phone) ?></small>
+                            <div class="fw-bold text-dark">
+                                <?= htmlspecialchars((string)($o->shipping_name ?? $o->fullname ?? $o->user->name ?? 'Khách hàng')) ?>
+                            </div>
+                            <small class="text-muted">
+                                <i class="fa-solid fa-phone me-1"></i><?= htmlspecialchars((string)($o->shipping_phone ?? $o->phone ?? $o->user->phone ?? 'Chưa có SĐT')) ?>
+                            </small>
                         </td>
-                        <td class="small text-muted"><?= date('H:i d/m/Y', strtotime($o->created_at)) ?></td>
-                        <td class="fw-bold text-danger"><?= number_format($o->total_amount) ?>đ</td>
+                        <td class="small text-muted"><?= date('H:i d/m/Y', strtotime($o->created_at ?? 'now')) ?></td>
+                        <td class="fw-bold text-danger"><?= number_format($o->total_amount ?? 0) ?>đ</td>
                         <td>
                             <span class="badge bg-light text-secondary border">
-                                <?= $o->payment_method == 'cod' ? 'COD' : 'Chuyển khoản' ?>
+                                <?= ($o->payment_method ?? '') == 'cod' ? 'COD' : 'Chuyển khoản' ?>
                             </span>
                         </td>
                         <td>
-                            <?php if ($o->status == 'pending'): ?>
+                            <?php if (($o->status ?? '') == 'pending'): ?>
                             <span class="badge bg-warning-subtle text-warning text-dark"><i
                                     class="fa-solid fa-clock me-1"></i>Chờ duyệt</span>
-                            <?php elseif ($o->status == 'shipping'): ?>
+                            <?php elseif (($o->status ?? '') == 'shipping'): ?>
                             <span class="badge bg-info-subtle text-info"><i class="fa-solid fa-truck me-1"></i>Đang
                                 giao</span>
-                            <?php elseif ($o->status == 'completed'): ?>
+                            <?php elseif (($o->status ?? '') == 'completed'): ?>
                             <span class="badge bg-success-subtle text-success"><i
                                     class="fa-solid fa-circle-check me-1"></i>Hoàn thành</span>
-                            <?php elseif ($o->status == 'cancelled'): ?>
+                            <?php elseif (($o->status ?? '') == 'cancelled'): ?>
                             <span class="badge bg-danger-subtle text-danger"><i
                                     class="fa-solid fa-circle-xmark me-1"></i>Đã hủy</span>
+                            <?php else: ?>
+                            <span class="badge bg-secondary-subtle text-secondary">Không xác định</span>
                             <?php endif; ?>
                         </td>
                         <td class="text-end">
@@ -132,8 +137,7 @@ require_once __DIR__ . '/../../layouts/admin.php';
             </div>
 
             <form action="/admin/orders/update-status" method="POST">
-    <?= \App\Helpers\CsrfHelper::csrfField() ?>
-    
+                <?= \App\Helpers\CsrfHelper::csrfField() ?>
                 
                 <div class="modal-body p-4 pt-0">
                     <input type="hidden" name="order_id" id="modalInputOrderId">
@@ -203,32 +207,31 @@ require_once __DIR__ . '/../../layouts/admin.php';
 
 <script>
 function openOrderDetailModal(order) {
-    document.getElementById('modalOrderId').innerText = order.id;
-    document.getElementById('modalInputOrderId').value = order.id;
-    document.getElementById('modalCustomerName').innerText = order.fullname;
-    document.getElementById('modalCustomerPhone').innerText = order.phone;
-    document.getElementById('modalCustomerAddress').innerText = order.address;
+    document.getElementById('modalOrderId').innerText = order.id || '';
+    document.getElementById('modalInputOrderId').value = order.id || '';
+    document.getElementById('modalCustomerName').innerText = order.shipping_name || order.fullname || (order.user ? order.user.name : '') || 'Chưa cập nhật';
+    document.getElementById('modalCustomerPhone').innerText = order.shipping_phone || order.phone || (order.user ? order.user.phone : '') || 'Chưa có SĐT';
+    document.getElementById('modalCustomerAddress').innerText = order.shipping_address || order.address || 'Chưa có địa chỉ';
     document.getElementById('modalCustomerNote').innerText = order.note || 'Không có';
-    document.getElementById('modalOrderStatus').value = order.status;
-    document.getElementById('modalTotalAmount').innerText = new Intl.NumberFormat('vi-VN').format(order.total_amount) +
-        'đ';
+    document.getElementById('modalOrderStatus').value = order.status || 'pending';
+    document.getElementById('modalTotalAmount').innerText = new Intl.NumberFormat('vi-VN').format(order.total_amount || 0) + 'đ';
 
     // Build bảng sản phẩm đặt mua
     let itemsHtml = '';
     if (order.items && order.items.length > 0) {
         order.items.forEach(item => {
-            let itemTotal = item.price * item.quantity;
+            let itemTotal = (item.price || 0) * (item.quantity || 0);
             itemsHtml += `
                 <tr>
-                    <td class="fw-semibold">${item.product_name}</td>
-                    <td class="text-center">${new Intl.NumberFormat('vi-VN').format(item.price)}đ</td>
-                    <td class="text-center">${item.quantity}</td>
+                    <td class="fw-semibold">${item.product_name || (item.product ? item.product.name : 'Sản phẩm')}</td>
+                    <td class="text-center">${new Intl.NumberFormat('vi-VN').format(item.price || 0)}đ</td>
+                    <td class="text-center">${item.quantity || 0}</td>
                     <td class="text-end fw-bold text-danger">${new Intl.NumberFormat('vi-VN').format(itemTotal)}đ</td>
                 </tr>
             `;
         });
     } else {
-        itemsHtml = '<tr><td colspan="4" class="text-center text-muted">Không tìm thấy chi tiết sản phẩm.</td></tr>';
+        itemsHtml = '<tr><td colspan="4" class="text-center text-muted py-3">Không tìm thấy chi tiết sản phẩm.</td></tr>';
     }
 
     document.getElementById('modalOrderItems').innerHTML = itemsHtml;
