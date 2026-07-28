@@ -59,6 +59,9 @@ $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
 $router->get('/logout', [AuthController::class, 'logout']);
 
+$router->get('/profile', [AuthController::class, 'profile'], ['auth']);
+$router->post('/profile/update', [AuthController::class, 'updateProfile'], ['auth']);
+
 /*
 |--------------------------------------------------------------------------
 | Admin
@@ -101,4 +104,5 @@ $router->group('/admin', ['admin'], function ($router) {
     // Settings (Cài Đặt & Cấu Hình Hệ Thống)
     $router->get('/settings', [AdminSettingController::class, 'index']);
     $router->post('/settings/update', [AdminSettingController::class, 'update']);
+
 });

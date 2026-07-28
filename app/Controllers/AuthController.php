@@ -1,5 +1,5 @@
 <?php
-// Xử lý logic Đăng ký, Đăng nhập, Đăng xuất
+// Xử lý logic Đăng ký, Đăng nhập, Đăng xuất & Quản lý hồ sơ cá nhân
 namespace App\Controllers;
 
 use App\Models\User;
@@ -86,7 +86,7 @@ class AuthController extends Controller
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
-        // CsrfHelper::validate(); // Tùy chọn, thường login form có thể bỏ CSRF, nhưng thêm thì tốt
+        // CsrfHelper::validate();
         $data = $_POST;
         $errors = [];
 
@@ -126,5 +126,86 @@ class AuthController extends Controller
     {
         SessionHelper::logout();
         $this->redirect('/');
+    }
+
+    // 4. Hiển thị trang hồ sơ cá nhân
+    public function profile()
+    {
+        $currentUser = SessionHelper::user();
+        $userId = is_array($currentUser) ? ($currentUser['id'] ?? null) : ($currentUser->id ?? null);
+
+        if (!$userId) {
+            $this->redirect('/login');
+            return;
+        }
+
+        $user = User::find($userId);
+
+        $this->view('client/profile', [
+            'user' => $user
+        ], 'main');
+    }
+
+    // 5. Cập nhật thông tin hồ sơ cá nhân
+    public function updateProfile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/profile');
+            return;
+        }
+
+        $currentUser = SessionHelper::user();
+        $userId = is_array($currentUser) ? ($currentUser['id'] ?? null) : ($currentUser->id ?? null);
+
+        if (!$userId) {
+            $this->redirect('/login');
+            return;
+        }
+
+        $user = User::find($userId);
+        if (!$user) {
+            $this->redirect('/profile');
+            return;
+        }
+
+        $name = trim($_POST['name'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+
+        $updateData = [
+            'name'    => $name,
+            'phone'   => $phone,
+            'address' => $address,
+        ];
+
+        // Nếu nhập mật khẩu mới
+        if (!empty($newPassword)) {
+            if ($newPassword !== $confirmPassword) {
+                $_SESSION['error'] = 'Mật khẩu xác nhận không khớp!';
+                $this->redirect('/profile');
+                return;
+            }
+            $updateData['password'] = password_hash($newPassword, PASSWORD_BCRYPT);
+        }
+
+        $user->update($updateData);
+
+        // Cập nhật lại biến Session người dùng
+        if (isset($_SESSION['user'])) {
+            if (is_array($_SESSION['user'])) {
+                $_SESSION['user']['name'] = $name;
+                $_SESSION['user']['phone'] = $phone;
+                $_SESSION['user']['address'] = $address;
+            } elseif (is_object($_SESSION['user'])) {
+                $_SESSION['user']->name = $name;
+                $_SESSION['user']->phone = $phone;
+                $_SESSION['user']->address = $address;
+            }
+        }
+
+        $_SESSION['success'] = 'Cập nhật thông tin tài khoản thành công!';
+        $this->redirect('/profile');
     }
 }
