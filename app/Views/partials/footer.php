@@ -53,7 +53,7 @@
             <div class="col-lg-3 col-md-6">
                 <h6 class="text-white fw-bold mb-3">Thông Tin Liên Hệ</h6>
                 <ul class="list-unstyled text-secondary small d-flex flex-column gap-2 mb-3">
-                    <li><i class="fa-solid fa-location-dot me-2 text-primary"></i>123 Đường Nguyễn Huệ, Quận 1, TP.HCM
+                    <li><i class="fa-solid fa-location-dot me-2 text-primary"></i>140 Lê Trọng Tấn TP.HCM
                     </li>
                     <li><i class="fa-solid fa-phone me-2 text-primary"></i>Hotline: 1900 xxxx (8:00 - 21:00)</li>
                     <li><i class="fa-solid fa-envelope me-2 text-primary"></i>Email: support@homeapp.vn</li>
