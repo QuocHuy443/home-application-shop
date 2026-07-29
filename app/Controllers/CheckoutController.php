@@ -43,11 +43,14 @@ class CheckoutController extends Controller
 
         if ($currentUser && is_object($currentUser)) {
             $currentUser->fullname = $currentUser->fullname ?? $currentUser->name ?? '';
-            if (empty($currentUser->phone) && !empty($_SESSION['user_phone'])) {
-                $currentUser->phone = $_SESSION['user_phone'];
+
+            // Nếu trong bảng users chưa có SĐT/Địa chỉ -> Lấy từ đơn hàng mới nhất để tự động điền
+            $latestOrder = $userId ? Order::where('user_id', $userId)->latest()->first() : null;
+            if (empty($currentUser->phone)) {
+                $currentUser->phone = $_SESSION['user_phone'] ?? ($latestOrder->shipping_phone ?? '');
             }
-            if (empty($currentUser->address) && !empty($_SESSION['user_address'])) {
-                $currentUser->address = $_SESSION['user_address'];
+            if (empty($currentUser->address)) {
+                $currentUser->address = $_SESSION['user_address'] ?? ($latestOrder->shipping_address ?? '');
             }
         }
 
@@ -101,24 +104,18 @@ class CheckoutController extends Controller
         DB::beginTransaction();
 
         try {
-            // Chỉ lưu SĐT & Địa chỉ vào tài khoản User nếu trước đó trong CSDL CHƯA CÓ (ghi 1 lần)
+            // Cập nhật địa chỉ & SĐT MỚI NHẤT vào tài khoản User và Session mỗi khi đặt hàng
             if (!empty($user['id'])) {
                 $userModel = User::find($user['id']);
                 if ($userModel) {
-                    $updateProfile = [];
-                    if (empty($userModel->phone) && !empty($data['phone'])) {
-                        $updateProfile['phone'] = trim($data['phone']);
-                    }
-                    if (empty($userModel->address) && !empty($data['address'])) {
-                        $updateProfile['address'] = trim($data['address']);
-                    }
-                    if (!empty($updateProfile)) {
-                        $userModel->update($updateProfile);
-                        SessionHelper::updateSessionInfo(
-                            $updateProfile['phone'] ?? null, 
-                            $updateProfile['address'] ?? null
-                        );
-                    }
+                    $newPhone   = trim($data['phone']);
+                    $newAddress = trim($data['address']);
+
+                    $userModel->update([
+                        'phone'   => $newPhone,
+                        'address' => $newAddress,
+                    ]);
+                    SessionHelper::updateSessionInfo($newPhone, $newAddress);
                 }
             }
 
