@@ -97,18 +97,24 @@ class CheckoutController extends Controller
         DB::beginTransaction();
 
         try {
-            // Cập nhật địa chỉ & SĐT MỚI NHẤT vào tài khoản User và Session mỗi khi đặt hàng
+            // Cách 2: KHÔNG GHI ĐÈ. Chỉ lưu SĐT & Địa chỉ nếu trong Hồ sơ tài khoản CHƯA CÓ (đang rỗng)
             if (!empty($user['id'])) {
                 $userModel = User::find($user['id']);
                 if ($userModel) {
-                    $newPhone   = trim($data['phone']);
-                    $newAddress = trim($data['address']);
-
-                    $userModel->update([
-                        'phone'   => $newPhone,
-                        'address' => $newAddress,
-                    ]);
-                    SessionHelper::updateSessionInfo($newPhone, $newAddress);
+                    $updateProfile = [];
+                    if (empty(trim($userModel->phone ?? '')) && !empty($data['phone'])) {
+                        $updateProfile['phone'] = trim($data['phone']);
+                    }
+                    if (empty(trim($userModel->address ?? '')) && !empty($data['address'])) {
+                        $updateProfile['address'] = trim($data['address']);
+                    }
+                    if (!empty($updateProfile)) {
+                        $userModel->update($updateProfile);
+                        SessionHelper::updateSessionInfo(
+                            $updateProfile['phone'] ?? null,
+                            $updateProfile['address'] ?? null
+                        );
+                    }
                 }
             }
 
