@@ -35,16 +35,15 @@ class CheckoutController extends Controller
         }
 
         $userId = $_SESSION['user_id'] ?? null;
-        $currentUser = $userId ? User::find($userId) : null;
+        $currentUser = null;
 
-        if (!$currentUser && SessionHelper::isLoggedIn()) {
-            $currentUser = (object) SessionHelper::user();
+        if ($userId) {
+            // Đọc dữ liệu mới nhất trực tiếp từ bảng users trong CSDL
+            $currentUser = User::find($userId);
         }
 
-        if ($currentUser && is_object($currentUser)) {
-            $currentUser->fullname = $currentUser->fullname ?? $currentUser->name ?? '';
-            $currentUser->phone    = $currentUser->phone ?? $_SESSION['user_phone'] ?? '';
-            $currentUser->address  = $currentUser->address ?? $_SESSION['user_address'] ?? '';
+        if ($currentUser) {
+            $currentUser->fullname = $currentUser->name;
         }
 
         $this->view('client/checkout', [

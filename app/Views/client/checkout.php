@@ -47,7 +47,7 @@ if (!empty($currentUser)) {
     <?php endif; ?>
 
     <?php if (!empty($cartItems)): ?>
-    <form action="/checkout/process" method="POST" id="checkoutForm">
+    <form action="/checkout/process" method="POST" id="checkoutForm" autocomplete="off">
     <?= \App\Helpers\CsrfHelper::csrfField() ?>
     
     
