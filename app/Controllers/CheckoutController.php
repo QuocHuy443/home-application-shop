@@ -101,20 +101,23 @@ class CheckoutController extends Controller
         DB::beginTransaction();
 
         try {
-            // Tự động cập nhật / lưu SĐT & Địa chỉ mới nhất vào tài khoản User và Session
+            // Chỉ lưu SĐT & Địa chỉ vào tài khoản User nếu trước đó trong CSDL CHƯA CÓ (ghi 1 lần)
             if (!empty($user['id'])) {
                 $userModel = User::find($user['id']);
                 if ($userModel) {
                     $updateProfile = [];
-                    if (!empty($data['phone'])) {
+                    if (empty($userModel->phone) && !empty($data['phone'])) {
                         $updateProfile['phone'] = trim($data['phone']);
                     }
-                    if (!empty($data['address'])) {
+                    if (empty($userModel->address) && !empty($data['address'])) {
                         $updateProfile['address'] = trim($data['address']);
                     }
                     if (!empty($updateProfile)) {
                         $userModel->update($updateProfile);
-                        SessionHelper::updateSessionInfo(trim($data['phone']), trim($data['address']));
+                        SessionHelper::updateSessionInfo(
+                            $updateProfile['phone'] ?? null, 
+                            $updateProfile['address'] ?? null
+                        );
                     }
                 }
             }
