@@ -43,15 +43,8 @@ class CheckoutController extends Controller
 
         if ($currentUser && is_object($currentUser)) {
             $currentUser->fullname = $currentUser->fullname ?? $currentUser->name ?? '';
-
-            // Nếu trong bảng users chưa có SĐT/Địa chỉ -> Lấy từ đơn hàng mới nhất để tự động điền
-            $latestOrder = $userId ? Order::where('user_id', $userId)->latest()->first() : null;
-            if (empty($currentUser->phone)) {
-                $currentUser->phone = $_SESSION['user_phone'] ?? ($latestOrder->shipping_phone ?? '');
-            }
-            if (empty($currentUser->address)) {
-                $currentUser->address = $_SESSION['user_address'] ?? ($latestOrder->shipping_address ?? '');
-            }
+            $currentUser->phone    = $currentUser->phone ?? $_SESSION['user_phone'] ?? '';
+            $currentUser->address  = $currentUser->address ?? $_SESSION['user_address'] ?? '';
         }
 
         $this->view('client/checkout', [
