@@ -106,3 +106,18 @@ $router->group('/admin', ['admin'], function ($router) {
     $router->post('/settings/update', [AdminSettingController::class, 'update']);
 
 });
+/*
+|--------------------------------------------------------------------------
+| Quên mật khẩu
+|--------------------------------------------------------------------------
+*/
+$router->get('/forgot-password', [AuthController::class, 'showForgotPassword']);
+$router->post('/forgot-password', [AuthController::class, 'sendResetLink']);
+
+/*
+|--------------------------------------------------------------------------
+| Đặt lại mật khẩu
+|--------------------------------------------------------------------------
+*/
+$router->get('/reset-password', [AuthController::class, 'showResetPassword']);
+$router->post('/reset-password', [AuthController::class, 'resetPassword']);
