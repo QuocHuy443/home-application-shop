@@ -35,7 +35,7 @@
                             <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted"><i
                                     class="fa-solid fa-id-card"></i></span>
                             <input type="text" name="fullname" class="form-control border-start-0 rounded-end-3"
-                                placeholder="Nguyễn Văn A" required>
+                                required oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên!')" oninput="this.setCustomValidity('')">
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@
                             <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted"><i
                                     class="fa-solid fa-envelope"></i></span>
                             <input type="email" name="email" class="form-control border-start-0 rounded-end-3"
-                                placeholder="email@example.com" required>
+                                required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ email hợp lệ!')" oninput="this.setCustomValidity('')">
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                             <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted"><i
                                     class="fa-solid fa-phone"></i></span>
                             <input type="tel" name="phone" class="form-control border-start-0 rounded-end-3"
-                                placeholder="0901234567" required>
+                                required oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại!')" oninput="this.setCustomValidity('')">
                         </div>
                     </div>
 
@@ -69,19 +69,19 @@
                             <label class="form-label fw-semibold small">Mật khẩu <span
                                     class="text-danger">*</span></label>
                             <input type="password" name="password" id="regPassword" class="form-control rounded-3"
-                                placeholder="Tối thiểu 6 ký tự" minlength="6" required>
+                                minlength="6" required oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu tối thiểu 6 ký tự!')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small">Xác nhận mật khẩu <span
                                     class="text-danger">*</span></label>
                             <input type="password" name="confirm_password" id="regConfirmPassword"
-                                class="form-control rounded-3" placeholder="Nhập lại mật khẩu" minlength="6" required>
+                                class="form-control rounded-3" minlength="6" required oninvalid="this.setCustomValidity('Vui lòng xác nhận lại mật khẩu!')" oninput="this.setCustomValidity('')">
                         </div>
                     </div>
 
                     <!-- Đồng ý điều khoản -->
                     <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <input class="form-check-input" type="checkbox" id="terms" required oninvalid="this.setCustomValidity('Vui lòng đồng ý với điều khoản dịch vụ!')" oninput="this.setCustomValidity('')">
                         <label class="form-check-input-label small text-muted" for="terms">
                             Tôi đồng ý với <a href="#" class="text-primary text-decoration-none">Điều khoản dịch vụ</a>
                             và <a href="#" class="text-primary text-decoration-none">Chính sách bảo mật</a>

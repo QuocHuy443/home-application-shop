@@ -3,8 +3,27 @@
  * Trang Thanh Toán (Checkout)
  * @var array $cartItems
  * @var float $totalAmount
- * @var object $currentUser
+ * @var object|array $currentUser
  */
+
+$userFullname = '';
+$userPhone    = '';
+$userEmail    = '';
+$userAddress  = '';
+
+if (!empty($currentUser)) {
+    if (is_object($currentUser)) {
+        $userFullname = $currentUser->fullname ?? $currentUser->name ?? '';
+        $userPhone    = $currentUser->phone ?? '';
+        $userEmail    = $currentUser->email ?? '';
+        $userAddress  = $currentUser->address ?? '';
+    } elseif (is_array($currentUser)) {
+        $userFullname = $currentUser['fullname'] ?? $currentUser['name'] ?? '';
+        $userPhone    = $currentUser['phone'] ?? '';
+        $userEmail    = $currentUser['email'] ?? '';
+        $userAddress  = $currentUser['address'] ?? '';
+    }
+}
 ?>
 
 <div class="container py-4">
@@ -18,6 +37,14 @@
     </nav>
 
     <h4 class="fw-bold mb-4"><i class="fa-solid fa-credit-card text-primary me-2"></i>Thanh Toán Đơn Hàng</h4>
+
+    <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3 mb-4 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['error']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
     <?php if (!empty($cartItems)): ?>
     <form action="/checkout/process" method="POST" id="checkoutForm">
@@ -34,31 +61,41 @@
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small">Họ và tên <span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="fullname" class="form-control rounded-3" placeholder="Nguyễn Văn A"
-                                required value="<?= htmlspecialchars($currentUser->fullname ?? '') ?>">
+                            <input type="text" name="fullname" id="shipping_fullname" class="form-control rounded-3" placeholder="Nguyễn Văn A"
+                                required 
+                                oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên người nhận!')" 
+                                oninput="this.setCustomValidity('')"
+                                value="<?= htmlspecialchars($userFullname) ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small">Số điện thoại <span
                                     class="text-danger">*</span></label>
-                            <input type="tel" name="phone" class="form-control rounded-3" placeholder="0901234567"
-                                required value="<?= htmlspecialchars($currentUser->phone ?? '') ?>">
+                            <input type="tel" name="phone" id="shipping_phone" class="form-control rounded-3" placeholder="0901234567"
+                                required 
+                                oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại người nhận!')" 
+                                oninput="this.setCustomValidity('')"
+                                value="<?= htmlspecialchars($userPhone) ?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold small">Địa chỉ Email</label>
-                            <input type="email" name="email" class="form-control rounded-3"
+                            <input type="email" name="email" id="shipping_email" class="form-control rounded-3"
                                 placeholder="email@example.com"
-                                value="<?= htmlspecialchars($currentUser->email ?? '') ?>">
+                                oninvalid="this.setCustomValidity('Vui lòng nhập đúng định dạng Email!')" 
+                                oninput="this.setCustomValidity('')"
+                                value="<?= htmlspecialchars($userEmail) ?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold small">Địa chỉ nhận hàng <span
                                     class="text-danger">*</span></label>
-                            <textarea name="address" class="form-control rounded-3" rows="2"
+                            <textarea name="address" id="shipping_address" class="form-control rounded-3" rows="2"
                                 placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/TP..."
-                                required><?= htmlspecialchars($currentUser->address ?? '') ?></textarea>
+                                required 
+                                oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ giao hàng chi tiết!')" 
+                                oninput="this.setCustomValidity('')"><?= htmlspecialchars($userAddress) ?></textarea>
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold small">Ghi chú đơn hàng (Tuỳ chọn)</label>
-                            <textarea name="note" class="form-control rounded-3" rows="2"
+                            <textarea name="note" id="shipping_note" class="form-control rounded-3" rows="2"
                                 placeholder="Ghi chú về thời gian giao hàng, hướng dẫn chi tiết..."></textarea>
                         </div>
                     </div>
