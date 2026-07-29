@@ -36,8 +36,19 @@ class CheckoutController extends Controller
 
         $userId = $_SESSION['user_id'] ?? null;
         $currentUser = $userId ? User::find($userId) : null;
-        if ($currentUser) {
-            $currentUser->fullname = $currentUser->name;
+
+        if (!$currentUser && SessionHelper::isLoggedIn()) {
+            $currentUser = (object) SessionHelper::user();
+        }
+
+        if ($currentUser && is_object($currentUser)) {
+            $currentUser->fullname = $currentUser->fullname ?? $currentUser->name ?? '';
+            if (empty($currentUser->phone) && !empty($_SESSION['user_phone'])) {
+                $currentUser->phone = $_SESSION['user_phone'];
+            }
+            if (empty($currentUser->address) && !empty($_SESSION['user_address'])) {
+                $currentUser->address = $_SESSION['user_address'];
+            }
         }
 
         $this->view('client/checkout', [
@@ -66,8 +77,22 @@ class CheckoutController extends Controller
         }
 
         // Validate dữ liệu người nhận
-        if (empty($data['fullname']) || empty($data['phone']) || empty($data['address'])) {
+        if (empty(trim($data['fullname'] ?? ''))) {
+            $_SESSION['error'] = 'Vui lòng nhập họ và tên người nhận hàng!';
             $this->back();
+            return;
+        }
+
+        if (empty(trim($data['phone'] ?? ''))) {
+            $_SESSION['error'] = 'Vui lòng nhập số điện thoại người nhận hàng!';
+            $this->back();
+            return;
+        }
+
+        if (empty(trim($data['address'] ?? ''))) {
+            $_SESSION['error'] = 'Vui lòng nhập địa chỉ nhận hàng chi tiết!';
+            $this->back();
+            return;
         }
 
         $user = SessionHelper::user();
@@ -76,14 +101,32 @@ class CheckoutController extends Controller
         DB::beginTransaction();
 
         try {
+            // Tự động cập nhật / lưu SĐT & Địa chỉ mới nhất vào tài khoản User và Session
+            if (!empty($user['id'])) {
+                $userModel = User::find($user['id']);
+                if ($userModel) {
+                    $updateProfile = [];
+                    if (!empty($data['phone'])) {
+                        $updateProfile['phone'] = trim($data['phone']);
+                    }
+                    if (!empty($data['address'])) {
+                        $updateProfile['address'] = trim($data['address']);
+                    }
+                    if (!empty($updateProfile)) {
+                        $userModel->update($updateProfile);
+                        SessionHelper::updateSessionInfo(trim($data['phone']), trim($data['address']));
+                    }
+                }
+            }
+
             // A. Tạo đơn hàng (Order)
             $order = Order::create([
                 'order_code'       => 'HD' . time() . rand(10, 99),
-                'user_id'          => $user['id'] ?? 1, // fallback nếu chưa login nhưng middleware đã bọc
-                'shipping_name'    => $data['fullname'],
-                'shipping_phone'   => $data['phone'],
-                'shipping_address' => $data['address'],
-                'note'             => $data['note'] ?? '',
+                'user_id'          => $user['id'] ?? 1,
+                'shipping_name'    => trim($data['fullname']),
+                'shipping_phone'   => trim($data['phone']),
+                'shipping_address' => trim($data['address']),
+                'note'             => trim($data['note'] ?? ''),
                 'total_amount'     => $totalAmount,
                 'status'           => 'pending'
             ]);
