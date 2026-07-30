@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Trang Thanh Toán (Checkout)
  * @var array $cartItems
@@ -48,9 +49,9 @@ if (!empty($currentUser)) {
 
     <?php if (!empty($cartItems)): ?>
     <form action="/checkout/process" method="POST" id="checkoutForm" autocomplete="off">
-    <?= \App\Helpers\CsrfHelper::csrfField() ?>
-    
-    
+        <?= \App\Helpers\CsrfHelper::csrfField() ?>
+
+
         <div class="row g-4">
             <!-- CỘT BÊN TRÁI: THÔNG TIN GIAO HÀNG & PHƯƠNG THỨC THANH TOÁN -->
             <div class="col-lg-7">
@@ -61,36 +62,32 @@ if (!empty($currentUser)) {
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small">Họ và tên <span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="fullname" id="shipping_fullname" class="form-control rounded-3" placeholder="Nguyễn Văn A"
-                                required 
-                                oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên người nhận!')" 
-                                oninput="this.setCustomValidity('')"
-                                value="<?= htmlspecialchars($userFullname) ?>">
+                            <input type="text" name="fullname" id="shipping_fullname" class="form-control rounded-3"
+                                placeholder="Nguyễn Văn A" required
+                                oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên người nhận!')"
+                                oninput="this.setCustomValidity('')" value="<?= htmlspecialchars($userFullname) ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small">Số điện thoại <span
                                     class="text-danger">*</span></label>
-                            <input type="tel" name="phone" id="shipping_phone" class="form-control rounded-3" placeholder="0901234567"
-                                required 
-                                oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại người nhận!')" 
-                                oninput="this.setCustomValidity('')"
-                                value="<?= htmlspecialchars($userPhone) ?>">
+                            <input type="tel" name="phone" id="shipping_phone" class="form-control rounded-3"
+                                placeholder="0901234567" required
+                                oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại người nhận!')"
+                                oninput="this.setCustomValidity('')" value="<?= htmlspecialchars($userPhone) ?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold small">Địa chỉ Email</label>
                             <input type="email" name="email" id="shipping_email" class="form-control rounded-3"
                                 placeholder="email@example.com"
-                                oninvalid="this.setCustomValidity('Vui lòng nhập đúng định dạng Email!')" 
-                                oninput="this.setCustomValidity('')"
-                                value="<?= htmlspecialchars($userEmail) ?>">
+                                oninvalid="this.setCustomValidity('Vui lòng nhập đúng định dạng Email!')"
+                                oninput="this.setCustomValidity('')" value="<?= htmlspecialchars($userEmail) ?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold small">Địa chỉ nhận hàng <span
                                     class="text-danger">*</span></label>
                             <textarea name="address" id="shipping_address" class="form-control rounded-3" rows="2"
-                                placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/TP..."
-                                required 
-                                oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ giao hàng chi tiết!')" 
+                                placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/TP..." required
+                                oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ giao hàng chi tiết!')"
                                 oninput="this.setCustomValidity('')"><?= htmlspecialchars($userAddress) ?></textarea>
                         </div>
                         <div class="col-12">
@@ -149,8 +146,24 @@ if (!empty($currentUser)) {
                         <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="position-relative">
-                                    <img src="/<?= $item['thumbnail'] ?>" class="rounded-3 border"
-                                        style="width: 50px; height: 50px; object-fit: contain;">
+                                    <?php
+                                            $image = $item['thumbnail'] ?? '';
+
+                                            if (
+                                                str_starts_with($image, 'http://') ||
+                                                str_starts_with($image, 'https://')
+                                            ) {
+                                                $imageUrl = $image;
+                                            } else {
+                                                $imageUrl = '/' . ltrim($image, '/');
+                                            }
+                                            ?>
+
+                                    <img src="<?= htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                        alt="<?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?>"
+                                        class="rounded-3 border"
+                                        style="width: 60px; height: 60px; object-fit: contain;">
+
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
                                         <?= $item['quantity'] ?>

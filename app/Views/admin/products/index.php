@@ -40,9 +40,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 <select name="category_id" class="form-select form-select-sm">
                     <option value="">-- Tất cả danh mục --</option>
                     <?php if (!empty($categories)): foreach ($categories as $cat): ?>
-                            <option value="<?= $cat->id ?>" <?= ($_GET['category_id'] ?? '') == $cat->id ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($cat->name) ?>
-                            </option>
+                    <option value="<?= $cat->id ?>" <?= ($_GET['category_id'] ?? '') == $cat->id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($cat->name) ?>
+                    </option>
                     <?php endforeach;
                     endif; ?>
                 </select>
@@ -83,57 +83,70 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 </thead>
                 <tbody>
                     <?php if (!empty($products)): foreach ($products as $p): ?>
-                            <tr>
-                                <td>
-                                    <img src="/<?= $p->thumbnail ?? 'assets/images/placeholder.jpg' ?>" class="rounded-3 border"
-                                        style="width: 48px; height: 48px; object-fit: contain; background: #fff;"
-                                        alt="Thumbnail">
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark border mb-1">#<?= $p->id ?></span>
-                                    <div class="fw-bold text-dark text-truncate" style="max-width: 250px;">
-                                        <?= htmlspecialchars($p->name) ?></div>
-                                </td>
-                                <td><span
-                                        class="badge bg-info-subtle text-info px-2 py-1"><?= htmlspecialchars($p->category_name ?? 'Chưa phân loại') ?></span>
-                                </td>
-                                <td class="fw-bold text-danger"><?= number_format($p->price) ?>đ</td>
-                                <td>
-                                    <?php if ($p->stock == 0): ?>
-                                        <span class="badge bg-danger-subtle text-danger"><i
-                                                class="fa-solid fa-circle-exclamation me-1"></i>Hết hàng (0)</span>
-                                    <?php elseif ($p->stock <= 5): ?>
-                                        <span class="badge bg-warning-subtle text-warning text-dark"><i
-                                                class="fa-solid fa-triangle-exclamation me-1"></i>Sắp hết (<?= $p->stock ?>)</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-success-subtle text-success"><?= $p->stock ?> sản phẩm</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            <?= ($p->status ?? 1) == 1 ? 'checked' : '' ?> title="Ẩn/Hiện sản phẩm">
-                                    </div>
-                                </td>
-                                <td class="text-end">
-                                    <button class="btn btn-sm btn-outline-primary rounded-circle me-1" title="Sửa"
-                                        onclick='openEditModal(<?= json_encode($p) ?>)'>
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <a href="/admin/products/delete?id=<?= $p->id ?>"
-                                        class="btn btn-sm btn-outline-danger rounded-circle" title="Xóa"
-                                        onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach;
+                    <tr>
+                        <td>
+                            <?php
+                                    $image = $p->thumbnail ?? '';
+
+                                    if (
+                                        str_starts_with($image, 'http://') ||
+                                        str_starts_with($image, 'https://')
+                                    ) {
+                                        $imageUrl = $image;
+                                    } else {
+                                        $imageUrl = '/' . ltrim($image, '/');
+                                    }
+                                    ?>
+
+                            <img src="<?= htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') ?>" class="rounded-3 border"
+                                style="width:48px;height:48px;object-fit:contain;background:#fff;"
+                                alt="<?= htmlspecialchars($p->name, ENT_QUOTES, 'UTF-8') ?>">
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border mb-1">#<?= $p->id ?></span>
+                            <div class="fw-bold text-dark text-truncate" style="max-width: 250px;">
+                                <?= htmlspecialchars($p->name) ?></div>
+                        </td>
+                        <td><span
+                                class="badge bg-info-subtle text-info px-2 py-1"><?= htmlspecialchars($p->category_name ?? 'Chưa phân loại') ?></span>
+                        </td>
+                        <td class="fw-bold text-danger"><?= number_format($p->price) ?>đ</td>
+                        <td>
+                            <?php if ($p->stock == 0): ?>
+                            <span class="badge bg-danger-subtle text-danger"><i
+                                    class="fa-solid fa-circle-exclamation me-1"></i>Hết hàng (0)</span>
+                            <?php elseif ($p->stock <= 5): ?>
+                            <span class="badge bg-warning-subtle text-warning text-dark"><i
+                                    class="fa-solid fa-triangle-exclamation me-1"></i>Sắp hết (<?= $p->stock ?>)</span>
+                            <?php else: ?>
+                            <span class="badge bg-success-subtle text-success"><?= $p->stock ?> sản phẩm</span>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    <?= ($p->status ?? 1) == 1 ? 'checked' : '' ?> title="Ẩn/Hiện sản phẩm">
+                            </div>
+                        </td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-circle me-1" title="Sửa"
+                                onclick='openEditModal(<?= json_encode($p) ?>)'>
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <a href="/admin/products/delete?id=<?= $p->id ?>"
+                                class="btn btn-sm btn-outline-danger rounded-circle" title="Xóa"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach;
                     else: ?>
-                        <tr>
-                            <td colspan="7" class="text-center py-5 text-muted">
-                                <i class="fa-solid fa-box-open fa-3x mb-3 d-block"></i> Chưa có dữ liệu sản phẩm nào.
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-box-open fa-3x mb-3 d-block"></i> Chưa có dữ liệu sản phẩm nào.
+                        </td>
+                    </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -146,9 +159,9 @@ require_once __DIR__ . '/../../layouts/admin.php';
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow rounded-4">
             <form action="/admin/products/save" method="POST" enctype="multipart/form-data" id="productForm">
-    <?= \App\Helpers\CsrfHelper::csrfField() ?>
-    
-                
+                <?= \App\Helpers\CsrfHelper::csrfField() ?>
+
+
                 <div class="modal-header border-bottom-0 pb-0">
                     <h5 class="modal-title fw-bold" id="productModalLabel"><i
                             class="fa-solid fa-box text-primary me-2"></i>Thêm Sản Phẩm Mới</h5>
@@ -170,7 +183,7 @@ require_once __DIR__ . '/../../layouts/admin.php';
                             <select name="category_id" id="productCategory" class="form-select rounded-3" required>
                                 <option value="">Chọn danh mục...</option>
                                 <?php if (!empty($categories)): foreach ($categories as $cat): ?>
-                                        <option value="<?= $cat->id ?>"><?= htmlspecialchars($cat->name) ?></option>
+                                <option value="<?= $cat->id ?>"><?= htmlspecialchars($cat->name) ?></option>
                                 <?php endforeach;
                                 endif; ?>
                             </select>
@@ -190,11 +203,32 @@ require_once __DIR__ . '/../../layouts/admin.php';
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label fw-semibold small">Hình ảnh đại diện</label>
-                            <input type="file" name="thumbnail" id="productImage" class="form-control rounded-3"
-                                accept="image/*" onchange="previewImage(this)">
-                            <div class="mt-2 text-center border rounded-3 p-2 bg-light d-none" id="previewContainer">
-                                <img id="imagePreview" src="" class="img-fluid rounded-2" style="max-height: 100px;">
+                            <label class="form-label fw-semibold small">
+                                Hình ảnh đại diện
+                            </label>
+
+                            <div class="mb-2">
+                                <label class="form-label small text-muted">
+                                    Upload ảnh từ máy
+                                </label>
+
+                                <input type="file" name="thumbnail" id="productImage" class="form-control rounded-3"
+                                    accept="image/*" onchange="previewImage(this)">
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label small text-muted">
+                                    Hoặc nhập link ảnh
+                                </label>
+
+                                <input type="url" name="thumbnail_url" id="productImageUrl"
+                                    class="form-control rounded-3" placeholder="https://example.com/image.jpg"
+                                    oninput="previewImageUrl()">
+                            </div>
+
+                            <div id="previewContainer" class="mt-2 border rounded-3 bg-light text-center p-2 d-none">
+
+                                <img id="imagePreview" src="" class="img-fluid rounded-2" style="max-height:120px;">
                             </div>
                         </div>
 
@@ -216,44 +250,90 @@ require_once __DIR__ . '/../../layouts/admin.php';
 </div>
 
 <script>
-    function openCreateModal() {
-        document.getElementById('productForm').reset();
-        document.getElementById('productId').value = '';
-        document.getElementById('productModalLabel').innerHTML =
-            '<i class="fa-solid fa-box text-primary me-2"></i>Thêm Sản Phẩm Mới';
-        document.getElementById('previewContainer').classList.add('d-none');
-    }
+function openCreateModal() {
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    document.getElementById('productModalLabel').innerHTML =
+        '<i class="fa-solid fa-box text-primary me-2"></i>Thêm Sản Phẩm Mới';
+    document.getElementById('previewContainer').classList.add('d-none');
+    document.getElementById("productImageUrl").value = "";
+    document.getElementById("imagePreview").src = "";
+}
 
-    function openEditModal(product) {
-        document.getElementById('productId').value = product.id;
-        document.getElementById('productName').value = product.name;
-        document.getElementById('productCategory').value = product.category_id;
-        document.getElementById('productPrice').value = product.price;
-        document.getElementById('productStock').value = product.stock;
-        document.getElementById('productDescription').value = product.description || '';
+function openEditModal(product) {
+    document.getElementById('productId').value = product.id;
+    document.getElementById('productName').value = product.name;
+    document.getElementById('productCategory').value = product.category_id;
+    document.getElementById('productPrice').value = product.price;
+    document.getElementById('productStock').value = product.stock;
+    document.getElementById('productDescription').value = product.description || '';
 
-        document.getElementById('productModalLabel').innerHTML =
-            '<i class="fa-solid fa-pen-to-square text-primary me-2"></i>Sửa Sản Phẩm #' + product.id;
+    document.getElementById('productModalLabel').innerHTML =
+        '<i class="fa-solid fa-pen-to-square text-primary me-2"></i>Sửa Sản Phẩm #' + product.id;
 
-        if (product.thumbnail) {
-            document.getElementById('imagePreview').src = '/' + product.thumbnail;
-            document.getElementById('previewContainer').classList.remove('d-none');
+    if (product.thumbnail) {
+
+        let image = product.thumbnail;
+
+        if (
+            image.startsWith("http://") ||
+            image.startsWith("https://")
+        ) {
+
+            document.getElementById("productImageUrl").value = image;
+
+            document.getElementById("imagePreview").src = image;
+
         } else {
-            document.getElementById('previewContainer').classList.add('d-none');
+
+            document.getElementById("productImageUrl").value = "";
+
+            document.getElementById("imagePreview").src =
+                "/" + image.replace(/^\/+/, "");
+
         }
 
-        var modal = new bootstrap.Modal(document.getElementById('productModal'));
-        modal.show();
-    }
+        document.getElementById("previewContainer")
+            .classList.remove("d-none");
 
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('imagePreview').src = e.target.result;
-                document.getElementById('previewContainer').classList.remove('d-none');
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
+    } else {
+
+        document.getElementById("previewContainer")
+            .classList.add("d-none");
     }
+    var modal = new bootstrap.Modal(document.getElementById('productModal'));
+    modal.show();
+}
+
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+            document.getElementById('previewContainer').classList.remove('d-none');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewImageUrl() {
+
+    let url = document.getElementById("productImageUrl").value.trim();
+
+    if (url !== "") {
+
+        document.getElementById("imagePreview").src = url;
+
+        document.getElementById("previewContainer")
+            .classList.remove("d-none");
+
+    } else {
+
+        document.getElementById("imagePreview").src = "";
+
+        document.getElementById("previewContainer")
+            .classList.add("d-none");
+
+    }
+}
 </script>

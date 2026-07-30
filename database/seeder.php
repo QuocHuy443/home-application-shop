@@ -170,13 +170,13 @@ $p3 = Product::create([
     'description' => 'Công nghệ nấu Fuzzy Logic, lòng nồi hợp kim nhôm phủ chống dính.',
     'price' => 1890000,
     'stock' => 18,
-    'thumbnail' => 'uploads/products/panasonic-srmvn.jpg',
+    'thumbnail' => 'https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/153450/Originals/fuzzy-logic-3.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p3->id,
-    'image_path' => 'uploads/products/panasonic-srmvn.jpg'
+    'image_path' => 'https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/153450/Originals/fuzzy-logic-3.jpg'
 ]);
 
 $p4 = Product::create([
@@ -185,13 +185,13 @@ $p4 = Product::create([
     'description' => 'Dung tích 6.2L, công nghệ Rapid Air giúp giảm đến 90% lượng dầu mỡ.',
     'price' => 4290000,
     'stock' => 15,
-    'thumbnail' => 'uploads/products/philips-hd9270.jpg',
+    'thumbnail' => 'https://bizweb.dktcdn.net/thumb/1024x1024/100/404/512/products/sp1-89.jpg?v=1765446939517',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p4->id,
-    'image_path' => 'uploads/products/philips-hd9270.jpg'
+    'image_path' => 'https://bizweb.dktcdn.net/thumb/1024x1024/100/404/512/products/sp1-89.jpg?v=1765446939517'
 ]);
 
 $p5 = Product::create([
@@ -200,13 +200,13 @@ $p5 = Product::create([
     'description' => 'Dung tích 5.5L, bảng điều khiển cảm ứng hiện đại.',
     'price' => 2890000,
     'stock' => 20,
-    'thumbnail' => 'uploads/products/locklock-ejf296.jpg',
+    'thumbnail' => 'https://product.hstatic.net/200000700229/product/5878-72__1__96d172505a2b44e0851dde2a76eacb75_1024x1024.png',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p5->id,
-    'image_path' => 'uploads/products/locklock-ejf296.jpg'
+    'image_path' => 'https://product.hstatic.net/200000700229/product/5878-72__1__96d172505a2b44e0851dde2a76eacb75_1024x1024.png'
 ]);
 
 $p6 = Product::create([
@@ -215,13 +215,13 @@ $p6 = Product::create([
     'description' => 'Dung tích 23L, khoang lò phủ Ceramic Enamel chống bám bẩn.',
     'price' => 2390000,
     'stock' => 16,
-    'thumbnail' => 'uploads/products/samsung-ms23.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/1987/203059/lo-vi-song-samsung-ms23k3513as-sv-n-23-lit-18.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p6->id,
-    'image_path' => 'uploads/products/samsung-ms23.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/1987/203059/lo-vi-song-samsung-ms23k3513as-sv-n-23-lit-18.jpg'
 ]);
 
 $p7 = Product::create([
@@ -230,13 +230,13 @@ $p7 = Product::create([
     'description' => 'Lò vi sóng có chức năng nướng, công suất 800W.',
     'price' => 2690000,
     'stock' => 14,
-    'thumbnail' => 'uploads/products/sharp-rg222.jpg',
+    'thumbnail' => 'https://kinghome.vn/data/products/200/lo-vi-song-sharp-r-g222vn-s-11603535770.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p7->id,
-    'image_path' => 'uploads/products/sharp-rg222.jpg'
+    'image_path' => 'https://kinghome.vn/data/products/200/lo-vi-song-sharp-r-g222vn-s-11603535770.jpg'
 ]);
 
 $p8 = Product::create([
@@ -245,13 +245,13 @@ $p8 = Product::create([
     'description' => 'Công suất 600W, cối thủy tinh chịu lực, xay đá tốt.',
     'price' => 1490000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/panasonic-mxv310.jpg',
+    'thumbnail' => 'https://bizweb.dktcdn.net/100/386/618/products/r-b8600dc4-155f-4871-91b8-f447379de4f9.png?v=1681744645453',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p8->id,
-    'image_path' => 'uploads/products/panasonic-mxv310.jpg'
+    'image_path' => 'https://bizweb.dktcdn.net/100/386/618/products/r-b8600dc4-155f-4871-91b8-f447379de4f9.png?v=1681744645453'
 ]);
 
 $p9 = Product::create([
@@ -260,13 +260,13 @@ $p9 = Product::create([
     'description' => 'Ép chậm giúp giữ nguyên vitamin và dưỡng chất trong trái cây.',
     'price' => 1990000,
     'stock' => 18,
-    'thumbnail' => 'uploads/products/kangaroo-kg150sj.jpg',
+    'thumbnail' => 'https://cdn2.fptshop.com.vn/unsafe/512x0/filters:format(webp):quality(75)/2023_4_12_638168909299139324_may-ep-cham-kangaroo-kg150sj-1.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p9->id,
-    'image_path' => 'uploads/products/kangaroo-kg150sj.jpg'
+    'image_path' => 'https://cdn2.fptshop.com.vn/unsafe/512x0/filters:format(webp):quality(75)/2023_4_12_638168909299139324_may-ep-cham-kangaroo-kg150sj-1.jpg'
 ]);
 
 $p10 = Product::create([
@@ -275,13 +275,13 @@ $p10 = Product::create([
     'description' => 'Máy pha Espresso bán tự động, áp suất bơm 15 bar.',
     'price' => 6990000,
     'stock' => 10,
-    'thumbnail' => 'uploads/products/delonghi-ec685.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYgYYsAkrT1rj5goHGC1cmq-a6vLAvrYLsOXCkHI776YxHT8_PyWhBpSJV&s=10',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p10->id,
-    'image_path' => 'uploads/products/delonghi-ec685.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYgYYsAkrT1rj5goHGC1cmq-a6vLAvrYLsOXCkHI776YxHT8_PyWhBpSJV&s=10'
 ]);
 // ===================================================
 // SẢN PHẨM 11 - 20
@@ -293,13 +293,13 @@ $p11 = Product::create([
     'description' => 'Dung tích 1.7L, công suất 2200W, tự ngắt khi nước sôi.',
     'price' => 690000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/electrolux-eek1303w.jpg',
+    'thumbnail' => 'https://kingshop.cdn.vccloud.vn/data/products/1000/binh-dun-sieu-toc-electrolux-eek1303w-1.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p11->id,
-    'image_path' => 'uploads/products/electrolux-eek1303w.jpg'
+    'image_path' => 'https://kingshop.cdn.vccloud.vn/data/products/1000/binh-dun-sieu-toc-electrolux-eek1303w-1.jpg'
 ]);
 
 $p12 = Product::create([
@@ -308,13 +308,13 @@ $p12 = Product::create([
     'description' => 'Bếp từ đơn công suất 2000W, mặt kính chịu nhiệt cao cấp.',
     'price' => 1590000,
     'stock' => 18,
-    'thumbnail' => 'uploads/products/sunhouse-shd6152.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp-t1XVxji9hBuaaS88RKsSDcjRPn3q_bMXlVmeNsvHNTT32hwkisRNOk&s=10',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p12->id,
-    'image_path' => 'uploads/products/sunhouse-shd6152.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp-t1XVxji9hBuaaS88RKsSDcjRPn3q_bMXlVmeNsvHNTT32hwkisRNOk&s=10'
 ]);
 
 $p13 = Product::create([
@@ -323,13 +323,13 @@ $p13 = Product::create([
     'description' => 'Thiết kế âm tủ, công suất hút mạnh, vận hành êm.',
     'price' => 5490000,
     'stock' => 10,
-    'thumbnail' => 'uploads/products/hafele-hcbi70b.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/4645/236764/Kit/may-hut-mui--am-tu-hafelehc-bi70b-note.jpg',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p13->id,
-    'image_path' => 'uploads/products/hafele-hcbi70b.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/4645/236764/Kit/may-hut-mui--am-tu-hafelehc-bi70b-note.jpg'
 ]);
 
 $p14 = Product::create([
@@ -338,13 +338,13 @@ $p14 = Product::create([
     'description' => 'Dung tích 6L, nhiều chế độ nấu tự động.',
     'price' => 2790000,
     'stock' => 15,
-    'thumbnail' => 'uploads/products/philips-hd2137.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3OUVy8k94UmBwwAWmDEqFBZmo4VFifoS5lWyc2cczRsrsaN_cifb4jDBV&s=10',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p14->id,
-    'image_path' => 'uploads/products/philips-hd2137.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3OUVy8k94UmBwwAWmDEqFBZmo4VFifoS5lWyc2cczRsrsaN_cifb4jDBV&s=10'
 ]);
 
 $p15 = Product::create([
@@ -353,13 +353,13 @@ $p15 = Product::create([
     'description' => '7 mức điều chỉnh nhiệt, chức năng rã đông và hâm nóng.',
     'price' => 990000,
     'stock' => 22,
-    'thumbnail' => 'uploads/products/tefal-tt3408.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb0Spp3DUZLqiz6ekBU4q6PJ1WlfTToZcIDmAwhCMUQlvzpenSvKG-0iA&s=10',
     'category_id' => $catKitchen->id
 ]);
 
 ProductImage::create([
     'product_id' => $p15->id,
-    'image_path' => 'uploads/products/tefal-tt3408.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb0Spp3DUZLqiz6ekBU4q6PJ1WlfTToZcIDmAwhCMUQlvzpenSvKG-0iA&s=10'
 ]);
 
 // ===========================
@@ -372,13 +372,13 @@ $p16 = Product::create([
     'description' => 'Lực hút 6000Pa, lau nhà nước nóng, điều khiển qua ứng dụng.',
     'price' => 14990000,
     'stock' => 8,
-    'thumbnail' => 'uploads/products/ecovacs-t20.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSuB2gEuPXTMFpAzhjfKPygryRRFRUW0oUAROERIaxqBKKdL_QgvaP0SQ&s=10',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p16->id,
-    'image_path' => 'uploads/products/ecovacs-t20.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSuB2gEuPXTMFpAzhjfKPygryRRFRUW0oUAROERIaxqBKKdL_QgvaP0SQ&s=10'
 ]);
 
 $p17 = Product::create([
@@ -387,13 +387,13 @@ $p17 = Product::create([
     'description' => 'Tự giặt giẻ lau, tự đổ rác, điều khiển bằng Mi Home.',
     'price' => 13990000,
     'stock' => 10,
-    'thumbnail' => 'uploads/products/xiaomi-x10plus.jpg',
+    'thumbnail' => 'https://cdn2.fptshop.com.vn/unsafe/512x0/filters:format(webp):quality(75)/2023_3_14_638144068286016888_robot-hut-bui-xiaomi-robot-vacuum-x10-4.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p17->id,
-    'image_path' => 'uploads/products/xiaomi-x10plus.jpg'
+    'image_path' => 'https://cdn2.fptshop.com.vn/unsafe/512x0/filters:format(webp):quality(75)/2023_3_14_638144068286016888_robot-hut-bui-xiaomi-robot-vacuum-x10-4.jpg'
 ]);
 
 $p18 = Product::create([
@@ -402,13 +402,13 @@ $p18 = Product::create([
     'description' => 'Máy hút bụi không dây cao cấp, cảm biến bụi laser.',
     'price' => 18990000,
     'stock' => 6,
-    'thumbnail' => 'uploads/products/dyson-v15.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRS9TwbRhO_QaxH7Sqhe9QUlbu1m_8SkMPKrwUXZdYshyqGa3fKTWybEy_&s=10',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p18->id,
-    'image_path' => 'uploads/products/dyson-v15.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRS9TwbRhO_QaxH7Sqhe9QUlbu1m_8SkMPKrwUXZdYshyqGa3fKTWybEy_&s=10'
 ]);
 
 $p19 = Product::create([
@@ -417,13 +417,13 @@ $p19 = Product::create([
     'description' => 'Công suất 1600W, hộp chứa bụi dung tích lớn.',
     'price' => 2290000,
     'stock' => 16,
-    'thumbnail' => 'uploads/products/electrolux-z1220.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/1990/236456/Kit/may-hut-bui-electrolux-z1220copy.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p19->id,
-    'image_path' => 'uploads/products/electrolux-z1220.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/1990/236456/Kit/may-hut-bui-electrolux-z1220copy.jpg'
 ]);
 
 $p20 = Product::create([
@@ -432,13 +432,13 @@ $p20 = Product::create([
     'description' => 'Công nghệ Plasmacluster Ion giúp khử mùi và lọc bụi mịn PM2.5.',
     'price' => 3490000,
     'stock' => 14,
-    'thumbnail' => 'uploads/products/sharp-fpj30e.jpg',
+    'thumbnail' => 'https://cdnv2.tgdd.vn/mwg-static/dmx/Products/Images/5473/199064/may-loc-khong-khi-sharp-fp-j30e-a-1-638614749351926385-700x467.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p20->id,
-    'image_path' => 'uploads/products/sharp-fpj30e.jpg'
+    'image_path' => 'https://cdnv2.tgdd.vn/mwg-static/dmx/Products/Images/5473/199064/may-loc-khong-khi-sharp-fp-j30e-a-1-638614749351926385-700x467.jpg'
 ]);
 // ===================================================
 // SẢN PHẨM 21 - 30
@@ -450,13 +450,13 @@ $p21 = Product::create([
     'description' => 'Lọc bụi mịn PM2.5, điều khiển từ xa bằng ứng dụng Mi Home.',
     'price' => 4290000,
     'stock' => 18,
-    'thumbnail' => 'uploads/products/xiaomi-airpurifier4.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqxcZyDAIZ6DSW-EGhcLKwO7qa774Cz_udhz-RkOUIzg&s=10',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p21->id,
-    'image_path' => 'uploads/products/xiaomi-airpurifier4.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqxcZyDAIZ6DSW-EGhcLKwO7qa774Cz_udhz-RkOUIzg&s=10'
 ]);
 
 $p22 = Product::create([
@@ -465,13 +465,13 @@ $p22 = Product::create([
     'description' => 'Làm mát nhanh, dung tích bình nước 45L, điều khiển từ xa.',
     'price' => 3790000,
     'stock' => 15,
-    'thumbnail' => 'uploads/products/kangaroo-kg50f79.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/7498/218315/may-lam-mat-khong-khi-kangaroo-kg50f79-040923-021909-600x600.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p22->id,
-    'image_path' => 'uploads/products/kangaroo-kg50f79.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/7498/218315/may-lam-mat-khong-khi-kangaroo-kg50f79-040923-021909-600x600.jpg'
 ]);
 
 $p23 = Product::create([
@@ -480,13 +480,13 @@ $p23 = Product::create([
     'description' => 'Quạt đứng 3 cánh, vận hành êm, 3 tốc độ gió.',
     'price' => 1590000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/panasonic-f409kb.jpg',
+    'thumbnail' => 'https://cdn.hstatic.net/products/1000404593/0w2a9274_9ba13f1b0846413c8875e2b64c4b8d24_1024x1024.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p23->id,
-    'image_path' => 'uploads/products/panasonic-f409kb.jpg'
+    'image_path' => 'https://cdn.hstatic.net/products/1000404593/0w2a9274_9ba13f1b0846413c8875e2b64c4b8d24_1024x1024.jpg'
 ]);
 
 $p24 = Product::create([
@@ -495,13 +495,13 @@ $p24 = Product::create([
     'description' => 'Điều khiển bằng điện thoại, nhiều chế độ gió tự nhiên.',
     'price' => 2690000,
     'stock' => 20,
-    'thumbnail' => 'uploads/products/xiaomi-smartfan2.jpg',
+    'thumbnail' => 'https://caothienphat.com/wp-content/uploads/2022/07/quat-khong-canh-keheal-a3.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p24->id,
-    'image_path' => 'uploads/products/xiaomi-smartfan2.jpg'
+    'image_path' => 'https://caothienphat.com/wp-content/uploads/2022/07/quat-khong-canh-keheal-a3.jpg'
 ]);
 
 $p25 = Product::create([
@@ -510,13 +510,13 @@ $p25 = Product::create([
     'description' => 'Mặt đế chống dính, hơi nước mạnh, chống nhỏ giọt.',
     'price' => 990000,
     'stock' => 35,
-    'thumbnail' => 'uploads/products/tefal-fv1846.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvOHnKFfZ-oUmwHUmbKroy9UTuWJWIoyzhYQV1btfdqJEEGr2rM7lcC8Q&s=10',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p25->id,
-    'image_path' => 'uploads/products/tefal-fv1846.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvOHnKFfZ-oUmwHUmbKroy9UTuWJWIoyzhYQV1btfdqJEEGr2rM7lcC8Q&s=10'
 ]);
 
 $p26 = Product::create([
@@ -525,13 +525,13 @@ $p26 = Product::create([
     'description' => 'Công suất 1600W, chế độ sấy mát bảo vệ tóc.',
     'price' => 790000,
     'stock' => 40,
-    'thumbnail' => 'uploads/products/philips-bhd300.jpg',
+    'thumbnail' => 'https://cdn.nguyenkimmall.com/images/detailed/719/10048951-may-say-toc-philips-bhd300-10-1.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p26->id,
-    'image_path' => 'uploads/products/philips-bhd300.jpg'
+    'image_path' => 'https://cdn.nguyenkimmall.com/images/detailed/719/10048951-may-say-toc-philips-bhd300-10-1.jpg'
 ]);
 
 $p27 = Product::create([
@@ -540,13 +540,13 @@ $p27 = Product::create([
     'description' => 'Công nghệ AI DD™, Inverter tiết kiệm điện, giặt hơi nước.',
     'price' => 10990000,
     'stock' => 12,
-    'thumbnail' => 'uploads/products/lg-fv1409.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/1944/310436/may-giat-lg-fv1409s4m-140823-025026-600x600.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p27->id,
-    'image_path' => 'uploads/products/lg-fv1409.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/1944/310436/may-giat-lg-fv1409s4m-140823-025026-600x600.jpg'
 ]);
 
 $p28 = Product::create([
@@ -555,13 +555,13 @@ $p28 = Product::create([
     'description' => 'Công nghệ EcoBubble tạo bong bóng siêu mịn, tiết kiệm điện.',
     'price' => 12490000,
     'stock' => 10,
-    'thumbnail' => 'uploads/products/samsung-ecobubble10kg.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/1944/236160/samsung-inverter-10kg-ww10ta046ae-sv-thumbs-600x600.jpg',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p28->id,
-    'image_path' => 'uploads/products/samsung-ecobubble10kg.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/1944/236160/samsung-inverter-10kg-ww10ta046ae-sv-thumbs-600x600.jpg'
 ]);
 
 $p29 = Product::create([
@@ -570,13 +570,13 @@ $p29 = Product::create([
     'description' => 'Sấy ngưng tụ, chống nhăn, bảo vệ sợi vải.',
     'price' => 13990000,
     'stock' => 8,
-    'thumbnail' => 'uploads/products/electrolux-ultimatecare.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVP2LTS4ZfqGTvAxf6SjU37hAJzA8hDcnT8Y09RRfiwZ7ex5snlFwtadc&s=10',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p29->id,
-    'image_path' => 'uploads/products/electrolux-ultimatecare.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVP2LTS4ZfqGTvAxf6SjU37hAJzA8hDcnT8Y09RRfiwZ7ex5snlFwtadc&s=10'
 ]);
 
 $p30 = Product::create([
@@ -585,13 +585,13 @@ $p30 = Product::create([
     'description' => 'Bình chứa tráng men Titan, hệ thống an toàn ELCB.',
     'price' => 3590000,
     'stock' => 15,
-    'thumbnail' => 'uploads/products/ariston-slim2.jpg',
+    'thumbnail' => 'https://bizweb.dktcdn.net/100/386/618/products/sl2-30-rs-2-5-fe.jpg?v=1632713648540',
     'category_id' => $catClean->id
 ]);
 
 ProductImage::create([
     'product_id' => $p30->id,
-    'image_path' => 'uploads/products/ariston-slim2.jpg'
+    'image_path' => 'https://bizweb.dktcdn.net/100/386/618/products/sl2-30-rs-2-5-fe.jpg?v=1632713648540'
 ]);
 // ===================================================
 // SẢN PHẨM 31 - 40 (NHÀ THÔNG MINH)
@@ -603,13 +603,13 @@ $p31 = Product::create([
     'description' => 'Khóa cửa thông minh hỗ trợ vân tay, mật khẩu, thẻ từ và ứng dụng Mi Home.',
     'price' => 4990000,
     'stock' => 12,
-    'thumbnail' => 'uploads/products/xiaomi-smart-lock-e10.jpg',
+    'thumbnail' => 'https://chiemtaimobile.vn/images/thumbnails/600/600/detailed/56/khoa-cua-thong-minh-xiaomi-e10-h1.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p31->id,
-    'image_path' => 'uploads/products/xiaomi-smart-lock-e10.jpg'
+    'image_path' => 'https://chiemtaimobile.vn/images/thumbnails/600/600/detailed/56/khoa-cua-thong-minh-xiaomi-e10-h1.jpg'
 ]);
 
 $p32 = Product::create([
@@ -618,13 +618,13 @@ $p32 = Product::create([
     'description' => 'Mở khóa bằng vân tay, mã số, thẻ từ và chìa cơ.',
     'price' => 7690000,
     'stock' => 10,
-    'thumbnail' => 'uploads/products/samsung-shp-dp609.jpg',
+    'thumbnail' => 'https://vinlock.com.vn/wp-content/uploads/2019/08/SHP-DP609_1.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p32->id,
-    'image_path' => 'uploads/products/samsung-shp-dp609.jpg'
+    'image_path' => 'https://vinlock.com.vn/wp-content/uploads/2019/08/SHP-DP609_1.jpg'
 ]);
 
 $p33 = Product::create([
@@ -633,13 +633,13 @@ $p33 = Product::create([
     'description' => 'Camera Full HD 1080P, xoay 360 độ, phát hiện chuyển động.',
     'price' => 890000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/imou-ranger2.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT56JdIdlnR7cg-UBoHev6VTgWoeJR8jvSHAzrRgjqBSlySU3IN-RCrl0mc&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p33->id,
-    'image_path' => 'uploads/products/imou-ranger2.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT56JdIdlnR7cg-UBoHev6VTgWoeJR8jvSHAzrRgjqBSlySU3IN-RCrl0mc&s=10'
 ]);
 
 $p34 = Product::create([
@@ -648,13 +648,13 @@ $p34 = Product::create([
     'description' => 'Camera WiFi quay quét 360°, đàm thoại hai chiều.',
     'price' => 990000,
     'stock' => 25,
-    'thumbnail' => 'uploads/products/ezviz-c6n.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSutV69G8r1dD37XLFF5z8bI3QPmkqis8r1cXr_6RxVl97O5ew3oCcvDs&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p34->id,
-    'image_path' => 'uploads/products/ezviz-c6n.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSutV69G8r1dD37XLFF5z8bI3QPmkqis8r1cXr_6RxVl97O5ew3oCcvDs&s=10'
 ]);
 
 $p35 = Product::create([
@@ -663,13 +663,13 @@ $p35 = Product::create([
     'description' => 'Camera an ninh Full HD, quay ngang 360°, hỗ trợ thẻ nhớ 128GB.',
     'price' => 790000,
     'stock' => 35,
-    'thumbnail' => 'uploads/products/tapo-c200.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9HXtnD_nu5M1-2poFB0qKkWW5tkaXMn_Z3bNvKFncIjf1RV2M0LE3n34&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p35->id,
-    'image_path' => 'uploads/products/tapo-c200.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9HXtnD_nu5M1-2poFB0qKkWW5tkaXMn_Z3bNvKFncIjf1RV2M0LE3n34&s=10'
 ]);
 
 $p36 = Product::create([
@@ -678,13 +678,13 @@ $p36 = Product::create([
     'description' => 'Điều khiển bật/tắt thiết bị từ xa qua ứng dụng Mi Home.',
     'price' => 390000,
     'stock' => 50,
-    'thumbnail' => 'uploads/products/xiaomi-smart-plug.jpg',
+    'thumbnail' => 'https://cdn.tgdd.vn/Products/Images/346/210446/vo-cam-dien-thong-minh-xiaomi-gmr4015gl-1-700x467.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p36->id,
-    'image_path' => 'uploads/products/xiaomi-smart-plug.jpg'
+    'image_path' => 'https://cdn.tgdd.vn/Products/Images/346/210446/vo-cam-dien-thong-minh-xiaomi-gmr4015gl-1-700x467.jpg'
 ]);
 
 $p37 = Product::create([
@@ -693,13 +693,13 @@ $p37 = Product::create([
     'description' => 'Hẹn giờ, điều khiển từ xa và quản lý điện năng.',
     'price' => 350000,
     'stock' => 40,
-    'thumbnail' => 'uploads/products/tapo-p100.jpg',
+    'thumbnail' => 'https://kinghome.vn/data/products/1750581315_main_o-cam-dien-mini-thong-minh-tp-link-tapo-p100.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p37->id,
-    'image_path' => 'uploads/products/tapo-p100.jpg'
+    'image_path' => 'https://kinghome.vn/data/products/1750581315_main_o-cam-dien-mini-thong-minh-tp-link-tapo-p100.jpg'
 ]);
 
 $p38 = Product::create([
@@ -708,13 +708,13 @@ $p38 = Product::create([
     'description' => 'Điều chỉnh độ sáng qua điện thoại, tương thích Google Home và Alexa.',
     'price' => 890000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/philips-hue-white.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ991fZZLvctxMbGROkd5LhjAf7gcd3Ks9-up5Bm1wXlmwVszbrPm8t0wI&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p38->id,
-    'image_path' => 'uploads/products/philips-hue-white.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ991fZZLvctxMbGROkd5LhjAf7gcd3Ks9-up5Bm1wXlmwVszbrPm8t0wI&s=10'
 ]);
 
 $p39 = Product::create([
@@ -723,13 +723,13 @@ $p39 = Product::create([
     'description' => 'Phát hiện đóng/mở cửa, gửi thông báo đến điện thoại.',
     'price' => 450000,
     'stock' => 40,
-    'thumbnail' => 'uploads/products/aqara-door-sensor.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLoNV2NOShpHlvRIOsL6hUD-D-5JvtWbMkeVte6IVMomSEx8CN6s9k1WQ&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p39->id,
-    'image_path' => 'uploads/products/aqara-door-sensor.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLoNV2NOShpHlvRIOsL6hUD-D-5JvtWbMkeVte6IVMomSEx8CN6s9k1WQ&s=10'
 ]);
 
 $p40 = Product::create([
@@ -738,13 +738,13 @@ $p40 = Product::create([
     'description' => 'Phát hiện chuyển động, tự động kích hoạt các thiết bị thông minh.',
     'price' => 520000,
     'stock' => 35,
-    'thumbnail' => 'uploads/products/aqara-motion-sensor.jpg',
+    'thumbnail' => 'https://maxsmart.vn/wp-content/uploads/2024/07/cam-bien-chuyen-dong-aqara-montion-sensor-p1-ms-s02-1.webp',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p40->id,
-    'image_path' => 'uploads/products/aqara-motion-sensor.jpg'
+    'image_path' => 'https://maxsmart.vn/wp-content/uploads/2024/07/cam-bien-chuyen-dong-aqara-montion-sensor-p1-ms-s02-1.webp'
 ]);
 // ===================================================
 // SẢN PHẨM 41 - 50 (NHÀ THÔNG MINH)
@@ -756,13 +756,13 @@ $p41 = Product::create([
     'description' => 'Chuông cửa có camera Full HD, đàm thoại hai chiều, phát hiện chuyển động AI.',
     'price' => 1690000,
     'stock' => 20,
-    'thumbnail' => 'uploads/products/xiaomi-doorbell-3.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtows4GWhQfPinOgmROJXoUUDM5wIuxgZeRYdwRV3AZi_bNQ73yvruSQ6&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p41->id,
-    'image_path' => 'uploads/products/xiaomi-doorbell-3.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtows4GWhQfPinOgmROJXoUUDM5wIuxgZeRYdwRV3AZi_bNQ73yvruSQ6&s=10'
 ]);
 
 $p42 = Product::create([
@@ -771,13 +771,13 @@ $p42 = Product::create([
     'description' => 'Điều khiển bằng giọng nói với Google Assistant, kết nối nhà thông minh.',
     'price' => 1290000,
     'stock' => 25,
-    'thumbnail' => 'uploads/products/google-nest-mini-2.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCkI2HGRBUQcncUijbQPbl2usX1q1rjvaRRYjXa3_bXOC9e8Jkuj3sNiHg&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p42->id,
-    'image_path' => 'uploads/products/google-nest-mini-2.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCkI2HGRBUQcncUijbQPbl2usX1q1rjvaRRYjXa3_bXOC9e8Jkuj3sNiHg&s=10'
 ]);
 
 $p43 = Product::create([
@@ -786,13 +786,13 @@ $p43 = Product::create([
     'description' => 'Tích hợp Alexa, phát nhạc, điều khiển thiết bị thông minh.',
     'price' => 1690000,
     'stock' => 18,
-    'thumbnail' => 'uploads/products/amazon-echo-dot-5.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf7bnhCGWleulIjSgxWxlOEdXs85Ub9vI736XrVGSCJQ&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p43->id,
-    'image_path' => 'uploads/products/amazon-echo-dot-5.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf7bnhCGWleulIjSgxWxlOEdXs85Ub9vI736XrVGSCJQ&s=10'
 ]);
 
 $p44 = Product::create([
@@ -801,13 +801,13 @@ $p44 = Product::create([
     'description' => 'Hỗ trợ 4K HDR, Dolby Audio, hệ điều hành Google TV.',
     'price' => 1890000,
     'stock' => 30,
-    'thumbnail' => 'uploads/products/xiaomi-mi-box-s.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDM5_3x5dyNEMgEQkeRTkzdr4OToLiCuwwozbRt1qquw&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p44->id,
-    'image_path' => 'uploads/products/xiaomi-mi-box-s.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDM5_3x5dyNEMgEQkeRTkzdr4OToLiCuwwozbRt1qquw&s=10'
 ]);
 
 $p45 = Product::create([
@@ -816,13 +816,13 @@ $p45 = Product::create([
     'description' => 'Máy chiếu Full HD nhỏ gọn, phù hợp giải trí tại gia.',
     'price' => 4290000,
     'stock' => 12,
-    'thumbnail' => 'uploads/products/wanbo-t2-max.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRhVjP8R0_USXR5DSY_vaZvVdt39cP9M2Geovl2rwIoIioTZ4teE_5RzvU&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p45->id,
-    'image_path' => 'uploads/products/wanbo-t2-max.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRhVjP8R0_USXR5DSY_vaZvVdt39cP9M2Geovl2rwIoIioTZ4teE_5RzvU&s=10'
 ]);
 
 $p46 = Product::create([
@@ -831,13 +831,13 @@ $p46 = Product::create([
     'description' => 'Công tắc cảm ứng điều khiển từ xa qua ứng dụng BroadLink.',
     'price' => 590000,
     'stock' => 35,
-    'thumbnail' => 'uploads/products/broadlink-tc2.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvOWlJoYNQWaUtWvGIU3Ky9PtY2Nx2uJyLkpiKa98DgpUBABuD9kWg_5r9&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p46->id,
-    'image_path' => 'uploads/products/broadlink-tc2.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvOWlJoYNQWaUtWvGIU3Ky9PtY2Nx2uJyLkpiKa98DgpUBABuD9kWg_5r9&s=10'
 ]);
 
 $p47 = Product::create([
@@ -846,13 +846,13 @@ $p47 = Product::create([
     'description' => 'Điều khiển TV, máy lạnh và các thiết bị hồng ngoại bằng điện thoại.',
     'price' => 890000,
     'stock' => 28,
-    'thumbnail' => 'uploads/products/broadlink-rm4-mini.jpg',
+    'thumbnail' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxN-rR9J0x-vbhEpNcP4AqTus8_nyj6ImsHh-fwyd8DotqANfF_4eUMDo&s=10',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p47->id,
-    'image_path' => 'uploads/products/broadlink-rm4-mini.jpg'
+    'image_path' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxN-rR9J0x-vbhEpNcP4AqTus8_nyj6ImsHh-fwyd8DotqANfF_4eUMDo&s=10'
 ]);
 
 $p48 = Product::create([
@@ -861,13 +861,13 @@ $p48 = Product::create([
     'description' => 'Tự động đóng mở rèm theo lịch hoặc điều khiển bằng ứng dụng.',
     'price' => 2590000,
     'stock' => 15,
-    'thumbnail' => 'uploads/products/aqara-curtain-driver.jpg',
+    'thumbnail' => 'https://smarthomekit.vn/wp-content/uploads/2022/09/DONG-CO-REM-KEO-PIN-AQARA-DRIVER-CURTAIN-E1.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p48->id,
-    'image_path' => 'uploads/products/aqara-curtain-driver.jpg'
+    'image_path' => 'https://smarthomekit.vn/wp-content/uploads/2022/09/DONG-CO-REM-KEO-PIN-AQARA-DRIVER-CURTAIN-E1.jpg'
 ]);
 
 $p49 = Product::create([
@@ -876,13 +876,13 @@ $p49 = Product::create([
     'description' => 'Theo dõi nhiệt độ và độ ẩm trong nhà theo thời gian thực.',
     'price' => 450000,
     'stock' => 45,
-    'thumbnail' => 'uploads/products/aqara-temperature-sensor.jpg',
+    'thumbnail' => 'https://cchome.com.vn/wp-content/uploads/2023/09/Hop-cam-bien-nhiet-do-Aqara-510x510-1.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p49->id,
-    'image_path' => 'uploads/products/aqara-temperature-sensor.jpg'
+    'image_path' => 'https://cchome.com.vn/wp-content/uploads/2023/09/Hop-cam-bien-nhiet-do-Aqara-510x510-1.jpg'
 ]);
 
 $p50 = Product::create([
@@ -891,13 +891,13 @@ $p50 = Product::create([
     'description' => 'Bộ điều khiển trung tâm kết nối các thiết bị Aqara và Apple HomeKit.',
     'price' => 1490000,
     'stock' => 20,
-    'thumbnail' => 'uploads/products/aqara-hub-m2.jpg',
+    'thumbnail' => 'https://smarthomekit.vn/wp-content/uploads/2020/12/AQARA-HUB-M2-web.jpg',
     'category_id' => $catSmart->id
 ]);
 
 ProductImage::create([
     'product_id' => $p50->id,
-    'image_path' => 'uploads/products/aqara-hub-m2.jpg'
+    'image_path' => 'https://smarthomekit.vn/wp-content/uploads/2020/12/AQARA-HUB-M2-web.jpg'
 ]);
 
 

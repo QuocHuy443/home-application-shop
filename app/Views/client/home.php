@@ -69,36 +69,36 @@
 
         <div class="row g-3">
             <?php if (!empty($categories)): ?>
-            <?php foreach ($categories as $cat): ?>
-            <div class="col-lg-2 col-md-3 col-6">
-                <a href="/products?category_id=<?= $cat->id ?>" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm text-center p-3 rounded-4 h-100 transition">
-                        <div class="bg-primary-subtle text-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
-                            style="width: 50px; height: 50px;">
-                            <i class="fa-solid fa-kitchen-set fa-lg"></i>
-                        </div>
-                        <h6 class="card-title text-dark fw-semibold small mb-0"><?= htmlspecialchars($cat->name) ?></h6>
+                <?php foreach ($categories as $cat): ?>
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <a href="/products?category_id=<?= $cat->id ?>" class="text-decoration-none">
+                            <div class="card border-0 shadow-sm text-center p-3 rounded-4 h-100 transition">
+                                <div class="bg-primary-subtle text-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fa-solid fa-kitchen-set fa-lg"></i>
+                                </div>
+                                <h6 class="card-title text-dark fw-semibold small mb-0"><?= htmlspecialchars($cat->name) ?></h6>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else: ?>
-            <?php
+                <?php
                 $demoCats = ['Nồi chiên', 'Máy hút bụi', 'Lò vi sóng', 'Máy xay sinh tố', 'Nồi cơm điện', 'Quạt thông minh'];
                 foreach ($demoCats as $name):
                 ?>
-            <div class="col-lg-2 col-md-3 col-6">
-                <a href="/products" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm text-center p-3 rounded-4 h-100">
-                        <div class="bg-primary-subtle text-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
-                            style="width: 50px; height: 50px;">
-                            <i class="fa-solid fa-kitchen-set fa-lg"></i>
-                        </div>
-                        <h6 class="card-title text-dark fw-semibold small mb-0"><?= $name ?></h6>
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <a href="/products" class="text-decoration-none">
+                            <div class="card border-0 shadow-sm text-center p-3 rounded-4 h-100">
+                                <div class="bg-primary-subtle text-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="fa-solid fa-kitchen-set fa-lg"></i>
+                                </div>
+                                <h6 class="card-title text-dark fw-semibold small mb-0"><?= $name ?></h6>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php endif; ?>
         </div>
     </div>
@@ -115,50 +115,62 @@
 
         <div class="row g-4">
             <?php if (!empty($latestProducts)): ?>
-            <?php foreach ($latestProducts as $product): ?>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
-                    <a href="/products/detail?slug=<?= $product->slug ?>" class="text-decoration-none">
-                        <div class="p-3 text-center bg-white">
-                            <img src="/<?= $product->thumbnail ?>" class="img-fluid"
-                                alt="<?= htmlspecialchars($product->name) ?>"
-                                style="height: 180px; object-fit: contain;">
-                        </div>
-                    </a>
-                    <div class="card-body d-flex flex-column p-3">
-                        <a href="/products/detail?slug=<?= $product->slug ?>" class="text-dark text-decoration-none">
-                            <h6 class="card-title fw-semibold text-truncate mb-2"
-                                title="<?= htmlspecialchars($product->name) ?>"><?= htmlspecialchars($product->name) ?>
-                            </h6>
-                        </a>
-                        <div class="mt-auto">
-                            <div class="d-flex align-items-center gap-2 mb-2">
-                                <span
-                                    class="text-danger fw-bold fs-5 mb-0"><?= number_format($product->price) ?>đ</span>
+                <?php foreach ($latestProducts as $product): ?>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                            <a href="/products/detail?slug=<?= $product->slug ?>" class="text-decoration-none">
+                                <div class="p-3 text-center bg-white">
+                                    <?php
+                                    $image = $product->thumbnail ?? '';
+
+                                    if (
+                                        str_starts_with($image, 'http://') ||
+                                        str_starts_with($image, 'https://')
+                                    ) {
+                                        $imageUrl = $image;
+                                    } else {
+                                        $imageUrl = '/' . ltrim($image, '/');
+                                    }
+                                    ?>
+
+                                    <img src="<?= htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                        alt="<?= htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8') ?>" class="img-fluid"
+                                        style="height: 160px; object-fit: contain;">
+                                </div>
+                            </a>
+                            <div class="card-body d-flex flex-column p-3">
+                                <a href="/products/detail?slug=<?= $product->slug ?>" class="text-dark text-decoration-none">
+                                    <h6 class="card-title fw-semibold text-truncate mb-2"
+                                        title="<?= htmlspecialchars($product->name) ?>"><?= htmlspecialchars($product->name) ?>
+                                    </h6>
+                                </a>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span
+                                            class="text-danger fw-bold fs-5 mb-0"><?= number_format($product->price) ?>đ</span>
+                                    </div>
+                                    <form action="/cart/add" method="POST">
+                                        <?= \App\Helpers\CsrfHelper::csrfField() ?>
+
+
+                                        <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit"
+                                            class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-semibold">
+                                            <i class="fa-solid fa-cart-plus me-1"></i> Thêm giỏ hàng
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                            <form action="/cart/add" method="POST">
-    <?= \App\Helpers\CsrfHelper::csrfField() ?>
-    
-                                
-                                <input type="hidden" name="product_id" value="<?= $product->id ?>">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit"
-                                    class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-semibold">
-                                    <i class="fa-solid fa-cart-plus me-1"></i> Thêm giỏ hàng
-                                </button>
-                            </form>
                         </div>
                     </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else: ?>
-            <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm">
-                <i class="fa-solid fa-boxes-packing fa-3x text-muted mb-3"></i>
-                <p class="text-muted mb-0">Chưa có sản phẩm nào được cập nhật.</p>
-            </div>
+                <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm">
+                    <i class="fa-solid fa-boxes-packing fa-3x text-muted mb-3"></i>
+                    <p class="text-muted mb-0">Chưa có sản phẩm nào được cập nhật.</p>
+                </div>
             <?php endif; ?>
         </div>
     </div>
 </section>
-

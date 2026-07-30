@@ -88,10 +88,10 @@
                     <?php foreach ($products as $product): ?>
                         <div class="col-md-4 col-6">
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
-                                <a href="/products/detail?slug=<?= $product->slug ?>" class="text-decoration-none">
+                                <a href="/products/detail?slug=<?= urlencode($product->slug) ?>" class="text-decoration-none">
                                     <div class="p-3 text-center bg-white">
                                         <?php
-                                        $image = $product->thumbnail;
+                                        $image = $product->thumbnail ?? '';
 
                                         if (
                                             str_starts_with($image, 'http://') ||
@@ -103,9 +103,9 @@
                                         }
                                         ?>
 
-                                        <img src="<?= htmlspecialchars($imageUrl) ?>" class="img-fluid"
-                                            alt="<?= htmlspecialchars($product->name) ?>"
-                                            style="height:160px; object-fit:contain;">
+                                        <img src="<?= htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                            alt="<?= htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8') ?>" class="img-fluid"
+                                            style="height: 160px; object-fit: contain;">
                                     </div>
                                 </a>
                                 <div class="card-body d-flex flex-column p-3">
