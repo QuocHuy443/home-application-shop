@@ -3,7 +3,9 @@
 /**
  * Trang Đăng Nhập
  * @var string $error
+ * @var string $username_email
  */
+$username_email = $_POST['username_email'] ?? '';
 ?>
 
 <div class="container py-5">
@@ -20,38 +22,44 @@
                 </div>
 
                 <?php if (!empty($error)): ?>
-                    <div class="alert alert-danger rounded-3 small py-2" role="alert">
-                        <i class="fa-solid fa-circle-exclamation me-1"></i> <?= htmlspecialchars($error) ?>
+                    <div class="alert alert-danger rounded-3 small py-2 d-flex align-items-center" role="alert">
+                        <i class="fa-solid fa-circle-exclamation me-2 fs-6"></i>
+                        <div><?= htmlspecialchars($error) ?></div>
                     </div>
                 <?php endif; ?>
 
                 <form action="/login" method="POST">
                     <?= \App\Helpers\CsrfHelper::csrfField() ?>
+                    
                     <!-- Email / Tên đăng nhập -->
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Email hoặc Tên đăng nhập</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted"><i
-                                    class="fa-solid fa-envelope"></i></span>
-                            <input type="text" name="username_email" class="form-control border-start-0 rounded-end-3"
-                                placeholder="nhapemail@example.com" required>
+                            <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="text" name="username_email" 
+                                class="form-control border-start-0 rounded-end-3"
+                                value="<?= htmlspecialchars($username_email) ?>"
+                                placeholder="nhapemail@example.com" required autofocus>
                         </div>
                     </div>
 
                     <!-- Mật khẩu -->
                     <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <label class="form-label fw-semibold small mb-1">Mật khẩu</label>
-                            <a href="/forgot-password" class="text-primary small text-decoration-none">Quên mật
-                                khẩu?</a>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="form-label fw-semibold small mb-0">Mật khẩu</label>
+                            <a href="/forgot-password" class="text-primary small text-decoration-none">Quên mật khẩu?</a>
                         </div>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted"><i
-                                    class="fa-solid fa-lock"></i></span>
+                            <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
                             <input type="password" name="password" id="passwordInput"
-                                class="form-control border-start-0 border-end-0" placeholder="••••••••" required>
-                            <button class="btn btn-outline-secondary border-start-0 rounded-end-3" type="button"
-                                onclick="togglePassword('passwordInput', this)">
+                                class="form-control border-start-0 border-end-0" 
+                                placeholder="••••••••" required>
+                            <button class="btn btn-light border border-start-0 text-muted rounded-end-3" 
+                                type="button" onclick="togglePassword('passwordInput', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
@@ -60,7 +68,7 @@
                     <!-- Ghi nhớ đăng nhập -->
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" name="remember" id="rememberMe">
-                        <label class="form-check-input-label small text-muted cursor-pointer" for="rememberMe">
+                        <label class="form-check-label small text-muted cursor-pointer" for="rememberMe">
                             Ghi nhớ tài khoản trên thiết bị này
                         </label>
                     </div>
@@ -71,8 +79,10 @@
                 </form>
 
                 <div class="text-center">
-                    <p class="text-muted small mb-0">Chưa có tài khoản? <a href="/register"
-                            class="text-primary fw-semibold text-decoration-none">Đăng ký ngay</a></p>
+                    <p class="text-muted small mb-0">
+                        Chưa có tài khoản? 
+                        <a href="/register" class="text-primary fw-semibold text-decoration-none">Đăng ký ngay</a>
+                    </p>
                 </div>
             </div>
         </div>

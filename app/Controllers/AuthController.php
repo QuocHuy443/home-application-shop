@@ -11,9 +11,13 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
+        SessionHelper::init();
+
         if (SessionHelper::isLoggedIn()) {
             $this->redirect('/');
+            return;
         }
+
         $error = $_SESSION['auth_error'] ?? '';
         unset($_SESSION['auth_error']);
         $this->view('auth/login', ['error' => $error], 'main');
@@ -21,9 +25,13 @@ class AuthController extends Controller
     
     public function showRegister()
     {
+        SessionHelper::init();
+
         if (SessionHelper::isLoggedIn()) {
             $this->redirect('/');
+            return;
         }
+
         $error = $_SESSION['auth_error'] ?? '';
         unset($_SESSION['auth_error']);
         $this->view('auth/register', ['error' => $error], 'main');
@@ -32,6 +40,8 @@ class AuthController extends Controller
     // 1. Xử lý Đăng ký tài khoản
     public function register()
     {
+        SessionHelper::init();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
         // CsrfHelper::validate();
         $data = $_POST;
@@ -64,18 +74,20 @@ class AuthController extends Controller
         if (!empty($errors)) {
             $_SESSION['auth_error'] = implode(' ', $errors);
             $this->redirect('/register');
+            return;
         }
 
         // Lấy role_id của 'customer' mặc định
         $customerRole = Role::where('name', 'customer')->first();
 
-        // Tạo người dùng mới (Mã hóa mật khẩu bằng BCRYPT)
+        // Tạo người dùng mới (Mặc định status = 1: Hoạt động)
         $user = User::create([
             'name'     => $data['fullname'],
             'email'    => $data['email'],
             'password' => password_hash($data['password'], PASSWORD_BCRYPT),
             'phone'    => $data['phone'] ?? null,
             'address'  => $data['address'] ?? null,
+            'status'   => 1,
             'role_id'  => $customerRole ? $customerRole->id : 2, // Mặc định role customer
         ]);
 
@@ -85,8 +97,10 @@ class AuthController extends Controller
     // 2. Xử lý Đăng nhập
     public function login()
     {
+        SessionHelper::init();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
-        // CsrfHelper::validate(); // Tùy chọn, thường login form có thể bỏ CSRF, nhưng thêm thì tốt
+        // CsrfHelper::validate();
         $data = $_POST;
         $errors = [];
 
@@ -100,6 +114,7 @@ class AuthController extends Controller
         if (!empty($errors)) {
             $_SESSION['auth_error'] = implode(' ', $errors);
             $this->redirect('/login');
+            return;
         }
 
         // Tìm user theo email
@@ -109,6 +124,14 @@ class AuthController extends Controller
         if (!$user || !password_verify($data['password'], $user->password)) {
             $_SESSION['auth_error'] = 'Email hoặc mật khẩu không chính xác.';
             $this->redirect('/login');
+            return;
+        }
+
+        // KIỂM TRA TRẠNG THÁI KHÓA TÀI KHOẢN (0: Bị khóa, 1: Hoạt động)
+        if ((int)($user->status ?? 1) === 0) {
+            $_SESSION['auth_error'] = 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Quản trị viên!';
+            $this->redirect('/login');
+            return; // DỪNG LUỒNG XỬ LÝ NGAY LẬP TỨC
         }
 
         // Đăng nhập thành công -> Lưu vào Session
@@ -124,6 +147,7 @@ class AuthController extends Controller
     // 3. Xử lý Đăng xuất
     public function logout()
     {
+        SessionHelper::init();
         SessionHelper::logout();
         $this->redirect('/');
     }
