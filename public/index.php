@@ -30,14 +30,27 @@ $router = new \App\Core\Router();
 require_once __DIR__ . '/../routes/web.php';
 require_once __DIR__ . '/../routes/api.php';
 
-// 5. Lấy URL và Method hiện tại từ trình duyệt
-$uri = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
+// 5. Lấy URL và Method hiện tại từ trình duyệt (Đã bóc tách Query String)
+$rawUri = $_SERVER['REQUEST_URI'] ?? '/';
+$uriPath = parse_url($rawUri, PHP_URL_PATH) ?? '/';
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // Bắt Request _method override cho form DELETE/PUT (nếu cần sau này)
 if ($method === 'POST' && isset($_POST['_method'])) {
     $method = strtoupper($_POST['_method']);
 }
 
+// =========================================================================
+// 5.1. KIỂM TRA CHẾ ĐỘ BẢO TRÌ (MAINTENANCE MODE)
+// Ngoại lệ: Cho phép truy cập đường dẫn Quản trị (/admin), Đăng nhập (/login), Đăng xuất (/logout)
+// =========================================================================
+$isExemptRoute = (strpos($uriPath, '/admin') === 0 || strpos($uriPath, '/login') === 0 || strpos($uriPath, '/logout') === 0);
+
+if (!$isExemptRoute) {
+    if (class_exists('\App\Middleware\MaintenanceMiddleware')) {
+        \App\Middleware\MaintenanceMiddleware::handle();
+    }
+}
+
 // 6. Xử lý Route
-$router->dispatch($method, $uri);
+$router->dispatch($method, $rawUri);
