@@ -11,8 +11,51 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('role')->orderBy('id', 'DESC')->get();
-        $this->view('admin/users/index', ['users' => $users], 'admin');
+        SessionHelper::init();
+
+        // 1. Nhận dữ liệu từ bộ lọc trên Form (GET)
+        $keyword = trim($_GET['keyword'] ?? '');
+        $roleId  = $_GET['role_id'] ?? '';
+        $status  = $_GET['status'] ?? '';
+
+        // 2. Khởi tạo Query lấy người dùng cùng bảng Role
+        $query = User::with('role');
+
+        // 3. Lọc theo từ khóa (Tìm theo Họ tên, Email hoặc Số điện thoại)
+        if ($keyword !== '') {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', "%{$keyword}%")
+                  ->orWhere('email', 'LIKE', "%{$keyword}%")
+                  ->orWhere('phone', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        // 4. Lọc theo Vai trò (role_id)
+        if ($roleId !== '' && $roleId !== null) {
+            $query->where('role_id', $roleId);
+        }
+
+        // 5. Lọc theo Trạng thái (status: 0 = Đã khóa, 1 = Hoạt động)
+        if ($status !== '' && $status !== null) {
+            $query->where('status', (int)$status);
+        }
+
+        // 6. Lấy danh sách kết quả (Ưu tiên người mới nhất lên đầu)
+        $users = $query->orderBy('id', 'DESC')->get();
+
+        // 7. Lấy danh sách tất cả các Role để đổ ra Dropdown Lọc
+        $roles = Role::all();
+
+        // 8. Trả dữ liệu ra View
+        $this->view('admin/users/index', [
+            'users'   => $users,
+            'roles'   => $roles,
+            'filters' => [
+                'keyword' => $keyword,
+                'role_id' => $roleId,
+                'status'  => $status,
+            ]
+        ], 'admin');
     }
 
     public function updateRole()
