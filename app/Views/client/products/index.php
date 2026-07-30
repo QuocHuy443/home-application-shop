@@ -71,7 +71,13 @@
         <main class="col-lg-9">
             <!-- Thanh Sắp xếp -->
             <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded-4 shadow-sm mb-4">
-                <span class="text-muted small">Hiển thị <strong><?= count($products ?? []) ?></strong> sản phẩm</span>
+                <span class="text-muted small">
+                    <?php if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator): ?>
+                        Hiển thị <strong><?= $products->firstItem() ?? 0 ?>-<?= $products->lastItem() ?? 0 ?></strong> trong <strong><?= $products->total() ?></strong> sản phẩm
+                    <?php else: ?>
+                        Hiển thị <strong><?= count($products ?? []) ?></strong> sản phẩm
+                    <?php endif; ?>
+                </span>
                 <div class="d-flex align-items-center gap-2">
                     <label class="small text-muted text-nowrap">Sắp xếp:</label>
                     <select class="form-select form-select-sm rounded-3 style-select" onchange="location = this.value;">
@@ -139,6 +145,13 @@
                     </div>
                 <?php endif; ?>
             </div>
+            
+            <!-- PHÂN TRANG -->
+            <?php if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator && $products->hasPages()): ?>
+                <div class="d-flex justify-content-center mt-4">
+                    <?= \App\Helpers\PaginationHelper::render($products) ?>
+                </div>
+            <?php endif; ?>
         </main>
     </div>
 </div>

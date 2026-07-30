@@ -91,6 +91,17 @@ require_once __DIR__ . '/../../layouts/admin.php';
                         </tbody>
                     </table>
                 </div>
+                <!-- PHÂN TRANG -->
+                <?php if ($categories instanceof \Illuminate\Pagination\LengthAwarePaginator && $categories->hasPages()): ?>
+                    <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                        <div class="text-muted small">
+                            Hiển thị từ <?= $categories->firstItem() ?> đến <?= $categories->lastItem() ?> trong tổng số <?= $categories->total() ?> danh mục
+                        </div>
+                        <div>
+                            <?= \App\Helpers\PaginationHelper::render($categories) ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 

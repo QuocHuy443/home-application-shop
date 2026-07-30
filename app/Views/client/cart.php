@@ -86,6 +86,12 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- PHÂN TRANG -->
+                <?php if (isset($paginatedCart) && $paginatedCart instanceof \Illuminate\Pagination\LengthAwarePaginator && $paginatedCart->hasPages()): ?>
+                    <div class="card-footer bg-white border-top py-3 d-flex justify-content-center">
+                        <?= \App\Helpers\PaginationHelper::render($paginatedCart) ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 

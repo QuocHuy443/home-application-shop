@@ -16,10 +16,11 @@ class OrderController extends Controller
             return;
         }
 
-        // Fetch orders for the current user
+        // Fetch orders for the current user (phần trang)
         $orders = Order::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5)
+            ->withQueryString();
 
         $this->view('client/orders', [
             'user' => $currentUser,

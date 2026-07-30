@@ -28,7 +28,8 @@ class CategoryController extends Controller
     // Sắp xếp mới nhất
     $categories = $query
         ->orderBy('id', 'DESC')
-        ->get();
+        ->paginate(10)
+        ->withQueryString();
 
     $this->view(
         'admin/categories/index',

@@ -40,8 +40,8 @@ class UserController extends Controller
             $query->where('status', (int)$status);
         }
 
-        // 6. Lấy danh sách kết quả (Ưu tiên người mới nhất lên đầu)
-        $users = $query->orderBy('id', 'DESC')->get();
+        // 6. Lọc và phân trang kết quả (10 người dùng mỗi trang)
+        $users = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
 
         // 7. Lấy danh sách tất cả các Role để đổ ra Dropdown Lọc
         $roles = Role::all();

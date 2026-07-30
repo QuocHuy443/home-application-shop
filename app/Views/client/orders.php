@@ -94,6 +94,13 @@ $displayEmail  = is_array($user) ? ($user['email'] ?? '') : ($user->email ?? '')
                             </tbody>
                         </table>
                     </div>
+                    
+                    <!-- PHÂN TRANG -->
+                    <?php if ($orders instanceof \Illuminate\Pagination\LengthAwarePaginator && $orders->hasPages()): ?>
+                        <div class="d-flex justify-content-center mt-4">
+                            <?= \App\Helpers\PaginationHelper::render($orders) ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>

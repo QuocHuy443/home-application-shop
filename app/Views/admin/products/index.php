@@ -151,6 +151,17 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 </tbody>
             </table>
         </div>
+        <!-- PHÂN TRANG -->
+        <?php if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator && $products->hasPages()): ?>
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <div class="text-muted small">
+                    Hiển thị từ <?= $products->firstItem() ?> đến <?= $products->lastItem() ?> trong tổng số <?= $products->total() ?> sản phẩm
+                </div>
+                <div>
+                    <?= \App\Helpers\PaginationHelper::render($products) ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

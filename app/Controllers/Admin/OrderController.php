@@ -10,7 +10,7 @@ class OrderController extends Controller
     // 1. Danh sách đơn hàng
     public function index()
     {
-        $orders = Order::with(['user', 'items.product', 'payment'])->orderBy('id', 'DESC')->get();
+        $orders = Order::with(['user', 'items.product', 'payment'])->orderBy('id', 'DESC')->paginate(10)->withQueryString();
         $this->view('admin/orders/index', ['orders' => $orders], 'admin');
     }
 

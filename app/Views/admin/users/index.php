@@ -155,6 +155,17 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 </tbody>
             </table>
         </div>
+        <!-- PHÂN TRANG -->
+        <?php if ($users instanceof \Illuminate\Pagination\LengthAwarePaginator && $users->hasPages()): ?>
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <div class="text-muted small">
+                    Hiển thị từ <?= $users->firstItem() ?> đến <?= $users->lastItem() ?> trong tổng số <?= $users->total() ?> người dùng
+                </div>
+                <div>
+                    <?= \App\Helpers\PaginationHelper::render($users) ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

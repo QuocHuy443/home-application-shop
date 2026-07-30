@@ -25,3 +25,16 @@ $capsule->addConnection([
 // 3. Khởi tạo Eloquent ORM cho toàn bộ ứng dụng
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
+
+// 4. Cấu hình Pagination cho môi trường không có Laravel framework
+\Illuminate\Pagination\Paginator::currentPageResolver(function ($pageName = 'page') {
+    $page = $_GET[$pageName] ?? 1;
+    if (filter_var($page, FILTER_VALIDATE_INT) !== false && (int)$page >= 1) {
+        return (int)$page;
+    }
+    return 1;
+});
+
+\Illuminate\Pagination\Paginator::currentPathResolver(function () {
+    return parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+});

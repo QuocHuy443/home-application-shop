@@ -122,6 +122,17 @@ require_once __DIR__ . '/../../layouts/admin.php';
                 </tbody>
             </table>
         </div>
+        <!-- PHÂN TRANG -->
+        <?php if ($orders instanceof \Illuminate\Pagination\LengthAwarePaginator && $orders->hasPages()): ?>
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <div class="text-muted small">
+                    Hiển thị từ <?= $orders->firstItem() ?> đến <?= $orders->lastItem() ?> trong tổng số <?= $orders->total() ?> đơn hàng
+                </div>
+                <div>
+                    <?= \App\Helpers\PaginationHelper::render($orders) ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

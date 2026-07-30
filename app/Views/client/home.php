@@ -172,5 +172,11 @@
                 </div>
             <?php endif; ?>
         </div>
+        <!-- PHÂN TRANG -->
+        <?php if ($latestProducts instanceof \Illuminate\Pagination\LengthAwarePaginator && $latestProducts->hasPages()): ?>
+            <div class="d-flex justify-content-center mt-4">
+                <?= \App\Helpers\PaginationHelper::render($latestProducts) ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

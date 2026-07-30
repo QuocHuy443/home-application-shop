@@ -58,8 +58,24 @@ class CartController extends Controller
             $totalAmount += $item['price'] * $item['quantity'];
         }
 
+        // Phân trang cho giỏ hàng (mỗi trang 5 sản phẩm)
+        $currentPage = \Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = array_slice($cart, ($currentPage - 1) * $perPage, $perPage);
+        $paginatedCart = new \Illuminate\Pagination\LengthAwarePaginator(
+            array_values($currentItems),
+            count($cart),
+            $perPage,
+            $currentPage,
+            [
+                'path' => \Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPath()
+            ]
+        );
+        $paginatedCart->withQueryString();
+
         $this->view('client/cart', [
-            'cartItems' => array_values($cart),
+            'cartItems' => array_values($currentItems),
+            'paginatedCart' => $paginatedCart,
             'totalAmount' => $totalAmount,
             'isLoggedIn' => true
         ], 'main');

@@ -42,10 +42,9 @@ class ProductController extends Controller
             $query->orderBy('id', 'DESC'); // Mới nhất
         }
 
-        $page = $filters['page'] ?? 1;
         $perPage = 12;
 
-        $products = $query->skip(($page - 1) * $perPage)->take($perPage)->get(); 
+        $products = $query->paginate($perPage)->withQueryString(); 
         $categories = Category::where('is_active', 1)->get();
 
         $this->view('client/products/index', [
