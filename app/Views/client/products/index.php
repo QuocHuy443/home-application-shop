@@ -90,9 +90,22 @@
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
                                 <a href="/products/detail?slug=<?= $product->slug ?>" class="text-decoration-none">
                                     <div class="p-3 text-center bg-white">
-                                        <img src="/<?= $product->thumbnail ?>" class="img-fluid"
+                                        <?php
+                                        $image = $product->thumbnail;
+
+                                        if (
+                                            str_starts_with($image, 'http://') ||
+                                            str_starts_with($image, 'https://')
+                                        ) {
+                                            $imageUrl = $image;
+                                        } else {
+                                            $imageUrl = '/' . ltrim($image, '/');
+                                        }
+                                        ?>
+
+                                        <img src="<?= htmlspecialchars($imageUrl) ?>" class="img-fluid"
                                             alt="<?= htmlspecialchars($product->name) ?>"
-                                            style="height: 160px; object-fit: contain;">
+                                            style="height:160px; object-fit:contain;">
                                     </div>
                                 </a>
                                 <div class="card-body d-flex flex-column p-3">
@@ -104,10 +117,9 @@
                                     <div class="mt-auto">
                                         <span
                                             class="text-danger fw-bold fs-5 d-block mb-2"><?= number_format($product->price) ?>đ</span>
-                                        <form action="/cart/add" method="POST">
-    <?= \App\Helpers\CsrfHelper::csrfField() ?>
-    
-    
+                                        <form action="/cart/add" method="POST"><?= \App\Helpers\CsrfHelper::csrfField() ?>
+
+
                                             <input type="hidden" name="product_id" value="<?= $product->id ?>">
                                             <input type="hidden" name="quantity" value="1">
                                             <button type="submit"
