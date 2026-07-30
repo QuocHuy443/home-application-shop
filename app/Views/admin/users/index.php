@@ -3,6 +3,8 @@
 /**
  * View: Quản Lý Người Dùng & Phân Quyền - Admin
  * @var array $users
+ * @var array $roles
+ * @var array $filters
  */
 
 use App\Helpers\SessionHelper;
@@ -29,23 +31,32 @@ require_once __DIR__ . '/../../layouts/admin.php';
             <div class="col-md-5">
                 <div class="input-group input-group-sm">
                     <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-                    <input type="text" name="search" class="form-control border-start-0"
+                    <input type="text" name="keyword" class="form-control border-start-0"
                         placeholder="Tìm tên, email hoặc số điện thoại..."
-                        value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                        value="<?= htmlspecialchars($filters['keyword'] ?? $_GET['keyword'] ?? '') ?>">
                 </div>
             </div>
             <div class="col-md-3">
-                <select name="role" class="form-select form-select-sm">
+                <select name="role_id" class="form-select form-select-sm">
                     <option value="">-- Tất cả vai trò --</option>
-                    <option value="admin" <?= ($_GET['role'] ?? '') == 'admin' ? 'selected' : '' ?>>Quản trị viên (Admin)</option>
-                    <option value="customer" <?= ($_GET['role'] ?? '') == 'customer' ? 'selected' : '' ?>>Khách hàng (Customer)</option>
+                    <?php if (!empty($roles)): ?>
+                        <?php foreach ($roles as $r): ?>
+                            <option value="<?= $r->id ?>" <?= (string)($filters['role_id'] ?? $_GET['role_id'] ?? '') === (string)$r->id ? 'selected' : '' ?>>
+                                <?= htmlspecialchars(ucfirst($r->name)) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="1" <?= (string)($filters['role_id'] ?? $_GET['role_id'] ?? '') === '1' ? 'selected' : '' ?>>Quản trị viên (Admin)</option>
+                        <option value="2" <?= (string)($filters['role_id'] ?? $_GET['role_id'] ?? '') === '2' ? 'selected' : '' ?>>Khách hàng (Customer)</option>
+                    <?php endif; ?>
                 </select>
             </div>
             <div class="col-md-2">
+                <?php $currentStatus = (string)($filters['status'] ?? $_GET['status'] ?? ''); ?>
                 <select name="status" class="form-select form-select-sm">
                     <option value="">-- Trạng thái --</option>
-                    <option value="active" <?= ($_GET['status'] ?? '') == 'active' ? 'selected' : '' ?>>Hoạt động</option>
-                    <option value="locked" <?= ($_GET['status'] ?? '') == 'locked' ? 'selected' : '' ?>>Đã khóa</option>
+                    <option value="1" <?= $currentStatus === '1' ? 'selected' : '' ?>>Hoạt động</option>
+                    <option value="0" <?= $currentStatus === '0' ? 'selected' : '' ?>>Đã khóa</option>
                 </select>
             </div>
             <div class="col-md-2 d-flex gap-1">
