@@ -20,9 +20,9 @@ class MaintenanceMiddleware
         // 2. Lấy giá trị trạng thái bảo trì từ CSDL (Quét toàn bộ tên cột phổ biến)
         try {
             $setting = Setting::where('key', 'maintenance_mode')
-                        ->orWhere('setting_key', 'maintenance_mode')
-                        ->orWhere('name', 'maintenance_mode')
-                        ->first();
+                ->orWhere('setting_key', 'maintenance_mode')
+                ->orWhere('name', 'maintenance_mode')
+                ->first();
 
             if ($setting) {
                 $val = $setting->value ?? $setting->setting_value ?? $setting->val ?? $setting->status ?? 0;
@@ -36,11 +36,11 @@ class MaintenanceMiddleware
         // MẸO TEST: Nếu muốn ép hiện trang bảo trì ngay lập tức để test giao diện,
         // Tuấn chỉ cần bỏ dấu // ở dòng dưới đây:
         // =========================================================================
-        $isMaintenance = true;
+        //$isMaintenance = true;
 
         // 3. Nếu hệ thống đang ở chế độ BẢO TRÌ
         if ($isMaintenance) {
-            
+
             // Lấy dữ liệu user từ Session (thử cả SessionHelper lẫn $_SESSION trực tiếp)
             $currentUser = SessionHelper::user() ?? ($_SESSION['user'] ?? null);
             $isAdmin = false;
@@ -48,7 +48,7 @@ class MaintenanceMiddleware
             if ($currentUser) {
                 // Lấy ID user
                 $userId = is_array($currentUser) ? ($currentUser['id'] ?? null) : ($currentUser->id ?? null);
-                
+
                 // Kiểm tra sơ bộ từ Session
                 $roleIdFromSession = is_array($currentUser) ? ($currentUser['role_id'] ?? null) : ($currentUser->role_id ?? null);
                 if ((int)$roleIdFromSession === 1) {
@@ -118,4 +118,4 @@ class MaintenanceMiddleware
             }
         }
     }
-}   
+}

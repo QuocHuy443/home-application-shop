@@ -61,6 +61,8 @@ $router->get('/logout', [AuthController::class, 'logout']);
 
 $router->get('/profile', [AuthController::class, 'profile'], ['auth']);
 $router->post('/profile/update', [AuthController::class, 'updateProfile'], ['auth']);
+$router->get('/profile/orders', [\App\Controllers\OrderController::class, 'index'], ['auth']);
+$router->get('/profile/orders/{id}', [\App\Controllers\OrderController::class, 'show'], ['auth']);
 
 /*
 |--------------------------------------------------------------------------

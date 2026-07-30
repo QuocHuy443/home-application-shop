@@ -31,6 +31,9 @@ $createdAt     = is_array($user) ? ($user['created_at'] ?? 'now') : ($user->crea
                     <a href="/profile" class="list-group-item list-group-item-action border-0 rounded-3 active fw-semibold my-1">
                         <i class="fa-solid fa-user me-2"></i> Thông tin tài khoản
                     </a>
+                    <a href="/profile/orders" class="list-group-item list-group-item-action border-0 rounded-3 fw-semibold my-1 text-dark">
+                        <i class="fa-solid fa-box-open me-2"></i> Lịch sử đơn hàng
+                    </a>
                     <a href="/logout" class="list-group-item list-group-item-action border-0 rounded-3 text-danger my-1">
                         <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
                     </a>

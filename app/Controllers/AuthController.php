@@ -21,7 +21,7 @@ class AuthController extends Controller
         unset($_SESSION['auth_error']);
         $this->view('auth/login', ['error' => $error], 'main');
     }
-    
+
     public function showRegister()
     {
         if (SessionHelper::isLoggedIn()) {
@@ -38,7 +38,7 @@ class AuthController extends Controller
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
         // CsrfHelper::validate();
         $data = $_POST;
-        
+
         $errors = [];
 
         // Validate dữ liệu đầu vào
@@ -214,113 +214,113 @@ class AuthController extends Controller
 
     // Quên mat khẩu
     public function showForgotPassword()
-{
-    $this->view('auth/forgot-password', [], 'main');
-}
-
-public function sendResetLink()
-{
-    $email = trim($_POST['email'] ?? '');
-
-    if (!$email) {
-        $_SESSION['error'] = 'Vui lòng nhập email';
-        return $this->redirect('/forgot-password');
+    {
+        $this->view('auth/forgot-password', [], 'main');
     }
 
-    $user = User::where('email', $email)->first();
+    public function sendResetLink()
+    {
+        $email = trim($_POST['email'] ?? '');
 
-    if (!$user) {
-        $_SESSION['error'] = 'Email không tồn tại';
-        return $this->redirect('/forgot-password');
-    }
+        if (!$email) {
+            $_SESSION['error'] = 'Vui lòng nhập email';
+            return $this->redirect('/forgot-password');
+        }
 
-    $token = bin2hex(random_bytes(32));
+        $user = User::where('email', $email)->first();
 
-    DB::table('password_resets')->where('email', $email)->delete();
+        if (!$user) {
+            $_SESSION['error'] = 'Email không tồn tại';
+            return $this->redirect('/forgot-password');
+        }
 
-    DB::table('password_resets')->insert([
-        'email' => $email,
-        'token' => password_hash($token, PASSWORD_DEFAULT),
-        'created_at' => date('Y-m-d H:i:s')
-    ]);
+        $token = bin2hex(random_bytes(32));
 
-    $resetLink = 'http://localhost:8000/reset-password?email=' . urlencode($email) . '&token=' . $token;
-
-    $mail = new PHPMailer(true);
-
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'vytranxuan111@gmail.com';
-        $mail->Password = 'yodhudpffgpexxrn';// Mật khẩu ứng dụng Gmail
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        $mail->setFrom('vytranxuan111@gmail.com', 'Home Appliance Shop');
-        $mail->addAddress($email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Đặt lại mật khẩu';
-        $mail->Body = '<p>Nhấn vào link sau để đặt lại mật khẩu:</p>' .
-                      '<p><a href="' . $resetLink . '">' . $resetLink . '</a></p>';
-
-        $mail->send();
-
-        $_SESSION['success'] = 'Đã gửi email đặt lại mật khẩu';
-    } catch (Exception $e) {
-        $_SESSION['error'] = 'Không gửi được email: ' . $mail->ErrorInfo;
-    }
-
-    return $this->redirect('/forgot-password');
-}
-
-public function showResetPassword()
-{
-    $this->view('auth/reset-password', [
-        'email' => $_GET['email'] ?? '',
-        'token' => $_GET['token'] ?? ''
-    ], 'main');
-}
-
-public function resetPassword()
-{
-    $email = $_POST['email'] ?? '';
-    $token = $_POST['token'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirm = $_POST['password_confirmation'] ?? '';
-
-    if ($password !== $confirm) {
-        $_SESSION['error'] = 'Mật khẩu xác nhận không khớp';
-        return $this->redirect('/reset-password?email=' . urlencode($email) . '&token=' . urlencode($token));
-    }
-
-    $reset = DB::table('password_resets')->where('email', $email)->first();
-
-    if (!$reset || !password_verify($token, $reset->token)) {
-        $_SESSION['error'] = 'Link không hợp lệ';
-        return $this->redirect('/forgot-password');
-    }
-
-    if (strtotime($reset->created_at) < strtotime('-60 minutes')) {
         DB::table('password_resets')->where('email', $email)->delete();
-        $_SESSION['error'] = 'Link đã hết hạn';
+
+        DB::table('password_resets')->insert([
+            'email' => $email,
+            'token' => password_hash($token, PASSWORD_DEFAULT),
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $resetLink = 'http://localhost:8000/reset-password?email=' . urlencode($email) . '&token=' . $token;
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'vytranxuan111@gmail.com';
+            $mail->Password = 'yodhudpffgpexxrn'; // Mật khẩu ứng dụng Gmail
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('vytranxuan111@gmail.com', 'Home Appliance Shop');
+            $mail->addAddress($email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Đặt lại mật khẩu';
+            $mail->Body = '<p>Nhấn vào link sau để đặt lại mật khẩu:</p>' .
+                '<p><a href="' . $resetLink . '">' . $resetLink . '</a></p>';
+
+            $mail->send();
+
+            $_SESSION['success'] = 'Đã gửi email đặt lại mật khẩu';
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Không gửi được email: ' . $mail->ErrorInfo;
+        }
+
         return $this->redirect('/forgot-password');
     }
 
-    $user = User::where('email', $email)->first();
-
-    if (!$user) {
-        $_SESSION['error'] = 'Người dùng không tồn tại';
-        return $this->redirect('/forgot-password');
+    public function showResetPassword()
+    {
+        $this->view('auth/reset-password', [
+            'email' => $_GET['email'] ?? '',
+            'token' => $_GET['token'] ?? ''
+        ], 'main');
     }
 
-    $user->password = password_hash($password, PASSWORD_DEFAULT);
-    $user->save();
+    public function resetPassword()
+    {
+        $email = $_POST['email'] ?? '';
+        $token = $_POST['token'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $confirm = $_POST['password_confirmation'] ?? '';
 
-    DB::table('password_resets')->where('email', $email)->delete();
+        if ($password !== $confirm) {
+            $_SESSION['error'] = 'Mật khẩu xác nhận không khớp';
+            return $this->redirect('/reset-password?email=' . urlencode($email) . '&token=' . urlencode($token));
+        }
 
-    $_SESSION['success'] = 'Đổi mật khẩu thành công';
-    return $this->redirect('/login');
-}
+        $reset = DB::table('password_resets')->where('email', $email)->first();
+
+        if (!$reset || !password_verify($token, $reset->token)) {
+            $_SESSION['error'] = 'Link không hợp lệ';
+            return $this->redirect('/forgot-password');
+        }
+
+        if (strtotime($reset->created_at) < strtotime('-60 minutes')) {
+            DB::table('password_resets')->where('email', $email)->delete();
+            $_SESSION['error'] = 'Link đã hết hạn';
+            return $this->redirect('/forgot-password');
+        }
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            $_SESSION['error'] = 'Người dùng không tồn tại';
+            return $this->redirect('/forgot-password');
+        }
+
+        $user->password = password_hash($password, PASSWORD_DEFAULT);
+        $user->save();
+
+        DB::table('password_resets')->where('email', $email)->delete();
+
+        $_SESSION['success'] = 'Đổi mật khẩu thành công';
+        return $this->redirect('/login');
+    }
 }
