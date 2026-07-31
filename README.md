@@ -9,6 +9,7 @@
 1. Cài đặt các thư viện:
    ```bash
    composer install
+   composer require phpmailer/phpmailer
    composer require illuminate/pagination
    ```
 3. Tạo cơ sở dữ liệu `home_appliance_shop` trong MySQL (nếu chưa có):
