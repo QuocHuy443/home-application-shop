@@ -26,10 +26,7 @@ class CategoryController extends Controller
     }
 
     // Sắp xếp mới nhất
-    $categories = $query
-        ->orderBy('id', 'DESC')
-        ->paginate(10)
-        ->withQueryString();
+    $categories = $query->orderBy('id', 'DESC')->paginate(10)->appends($_GET);
 
     $this->view(
         'admin/categories/index',

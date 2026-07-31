@@ -36,7 +36,7 @@ class MaintenanceMiddleware
         // MẸO TEST: Nếu muốn ép hiện trang bảo trì ngay lập tức để test giao diện,
         // Tuấn chỉ cần bỏ dấu // ở dòng dưới đây:
         // =========================================================================
-        //$isMaintenance = true;
+        //      $isMaintenance = true;
 
         // 3. Nếu hệ thống đang ở chế độ BẢO TRÌ
         if ($isMaintenance) {

@@ -44,7 +44,7 @@ class ProductController extends Controller
 
         $perPage = 12;
 
-        $products = $query->paginate($perPage)->withQueryString(); 
+        $products = $query->paginate($perPage)->appends($_GET);
         $categories = Category::where('is_active', 1)->get();
 
         $this->view('client/products/index', [

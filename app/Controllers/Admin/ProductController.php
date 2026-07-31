@@ -47,7 +47,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+        $products = $query->orderBy('id', 'DESC')->paginate(10)->appends($_GET);
         $categories = Category::orderBy('name')->get();
 
         $this->view(
